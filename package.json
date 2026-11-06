@@ -1,0 +1,28 @@
+{
+  "name": "building-live-envmaps-nextjs-jsx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@pmndrs/branding": "^0.0.8",
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "axios": "^1.20.0",
+    "lamina": "1.2.2",
+    "next": "^15.5.0",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "tailwindcss": "^4.3.3",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.5.0",
+    "typescript": "^5.9.0"
+  }
+}
