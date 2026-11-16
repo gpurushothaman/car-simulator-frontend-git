@@ -13,62 +13,73 @@ const SceneVariantContext = createContext(null);
 
 export function SceneVariantProvider({ children }) {
   const [variantRegistry, setVariantRegistry] = useState({});
-  const registryRef = useRef(variantRegistry);
+  const registryRef = useRef({});
   const registrationRef = useRef({});
-  const selectedVariantRef = useRef(null);
 
-  // Keep callbacks independent of registry state to avoid recreating them
-  // whenever a model registers or a variant selection changes.
-  registryRef.current = variantRegistry;
+  // Keep all active variant selections per model ID. A base GLB can have
+  // multiple independent slots (paint, seats, trim), so one selected name
+  // is not enough. A replacement bumper has its own model ID and own list.
+  const selectedVariantsByModelRef = useRef({});
 
   const registerModelVariants = useCallback(
     (modelId, model, variants, applyVariant) => {
       const registrationId = Symbol(modelId);
       registrationRef.current[modelId] = registrationId;
 
-      setVariantRegistry((previous) => ({
-        ...previous,
-        [modelId]: {
-          model,
-          variants,
-          applyVariant,
-          selectedVariant: null,
-        },
-      }));
+      const entry = {
+        model,
+        variants,
+        applyVariant,
+        selectedVariant:
+          (selectedVariantsByModelRef.current[modelId] ?? []).slice(-1)[0] ?? null,
+      };
 
-      const selectedName = selectedVariantRef.current;
-      if (!selectedName) return;
+      registryRef.current = {
+        ...registryRef.current,
+        [modelId]: entry,
+      };
+      setVariantRegistry(registryRef.current);
 
-      const match = variants.find((variant) => variant.name === selectedName);
-      if (!match) return;
-
-      Promise.resolve(applyVariant(match.index))
-        .then(() => {
+      // Restore every previously selected slot for this model, in selection
+      // order. For example, body paint and seat material both survive a remount.
+      const selectedNames = selectedVariantsByModelRef.current[modelId] ?? [];
+      if (selectedNames.length) {
+        (async () => {
+          for (const selectedName of selectedNames) {
+            const match = variants.find((variant) => variant.name === selectedName);
+            if (match) await applyVariant(match.index);
+            if (registrationRef.current[modelId] !== registrationId) return;
+          }
           if (registrationRef.current[modelId] !== registrationId) return;
           setVariantRegistry((previous) => {
             const current = previous[modelId];
             if (!current) return previous;
-            return {
+            const next = {
               ...previous,
-              [modelId]: { ...current, selectedVariant: selectedName },
+              [modelId]: {
+                ...current,
+                selectedVariant: selectedNames[selectedNames.length - 1],
+              },
             };
+            registryRef.current = next;
+            return next;
           });
-        })
-        .catch((error) => {
-          console.error(`Failed to apply variant "${selectedName}" to "${modelId}":`, error);
+        })().catch((error) => {
+          console.error(`Failed to restore variants on "${modelId}":`, error);
         });
+      }
     },
     []
   );
 
   const unregisterModelVariants = useCallback((modelId) => {
     delete registrationRef.current[modelId];
-    setVariantRegistry((previous) => {
-      if (!previous[modelId]) return previous;
-      const next = { ...previous };
-      delete next[modelId];
-      return next;
-    });
+    const next = { ...registryRef.current };
+    delete next[modelId];
+    registryRef.current = next;
+    setVariantRegistry(next);
+    // Intentionally keep selectedVariantsByModelRef[modelId] so a replacement
+    // component with the same ID can restore its own selections.
   }, []);
 
   const selectModelVariant = useCallback(async (modelId, variantName) => {
@@ -79,60 +90,46 @@ export function SceneVariantProvider({ children }) {
     if (!variant) return false;
 
     const registrationId = registrationRef.current[modelId];
-    await item.applyVariant(variant.index);
+    try {
+      await item.applyVariant(variant.index);
+    } catch (error) {
+      console.error(`Failed to apply variant "${variantName}" to "${modelId}":`, error);
+      return false;
+    }
 
     if (registrationRef.current[modelId] !== registrationId) return false;
 
+    const previousSelections = selectedVariantsByModelRef.current[modelId] ?? [];
+    // Move this variant to the end. If it belongs to a mesh slot already
+    // selected, its material overwrites that slot; other slots remain active.
+    selectedVariantsByModelRef.current[modelId] = [
+      ...previousSelections.filter((name) => name !== variantName),
+      variantName,
+    ];
     setVariantRegistry((previous) => {
       const current = previous[modelId];
       if (!current) return previous;
-      return {
+      const next = {
         ...previous,
         [modelId]: { ...current, selectedVariant: variantName },
       };
+      registryRef.current = next;
+      return next;
     });
     return true;
   }, []);
 
+  // Backwards-compatible API. Each matching model gets its own saved state.
   const selectGlobalVariant = useCallback(async (variantName) => {
-    selectedVariantRef.current = variantName;
     const entries = Object.entries(registryRef.current);
-
-    const results = await Promise.all(
+    await Promise.all(
       entries.map(async ([modelId, item]) => {
         const variant = item.variants.find((entry) => entry.name === variantName);
-        if (!variant) return null;
-
-        const registrationId = registrationRef.current[modelId];
-        try {
-          await item.applyVariant(variant.index);
-          if (registrationRef.current[modelId] !== registrationId) return null;
-          return { modelId, registrationId };
-        } catch (error) {
-          console.error(`Failed to apply global variant "${variantName}" to "${modelId}":`, error);
-          return null;
-        }
+        if (!variant) return;
+        await selectModelVariant(modelId, variantName);
       })
     );
-
-    const successfulIds = new Set(
-      results.filter(Boolean).map(({ modelId }) => modelId)
-    );
-
-    if (successfulIds.size > 0) {
-      setVariantRegistry((previous) => {
-        let changed = false;
-        const next = { ...previous };
-        for (const modelId of successfulIds) {
-          const current = next[modelId];
-          if (!current || current.selectedVariant === variantName) continue;
-          next[modelId] = { ...current, selectedVariant: variantName };
-          changed = true;
-        }
-        return changed ? next : previous;
-      });
-    }
-  }, []);
+  }, [selectModelVariant]);
 
   const contextValue = useMemo(
     () => ({

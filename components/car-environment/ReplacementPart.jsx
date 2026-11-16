@@ -13,6 +13,9 @@ export default function ReplacementPart({
   partId,
 }) {
   const groupRef = useRef(null);
+  // A request counter per mesh prevents a new material request from
+  // cancelling pending changes on other meshes in this replacement part.
+  const meshRequestRef = useRef(new WeakMap());
   const { scene, animations, parser } = useGLTF(path);
   const { actions, names, mixer } = useAnimations(animations, groupRef);
 
@@ -42,7 +45,8 @@ export default function ReplacementPart({
         object.userData.originalMaterial = object.material;
       }
 
-      object.material = object.userData.originalMaterial;
+      // Keep materials already selected on other meshes. Only meshes
+      // explicitly mapped to this variant are changed.
       if (!meshExtension) return;
 
       const mapping = meshExtension.mappings?.find((item) =>
@@ -50,8 +54,13 @@ export default function ReplacementPart({
       );
       if (!mapping) return;
 
+      const requestId = (meshRequestRef.current.get(object) ?? 0) + 1;
+      meshRequestRef.current.set(object, requestId);
+
       tasks.push(
         parser.getDependency("material", mapping.material).then((material) => {
+          // Only a newer request for this exact mesh can invalidate this one.
+          if (meshRequestRef.current.get(object) !== requestId) return;
           object.material = material;
           parser.assignFinalMaterial(object);
         })

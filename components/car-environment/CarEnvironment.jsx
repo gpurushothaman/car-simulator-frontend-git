@@ -1,7 +1,7 @@
 "use client";
 
 import * as THREE from "three";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import CarModel from "./CarModel";
@@ -14,6 +14,7 @@ import CarCustomization from "./CarCustomization";
 import {
   SceneAnimationProvider,
 } from "./SceneAnimationContext";
+import SceneAnimationControls from "./SceneAnimationControls";
 import { SceneVariantProvider } from "./SceneVariantContext";
 import CustomizationUI from "./CustomizationUI";
 
@@ -34,6 +35,24 @@ function getDefaultValue(options, fallback) {
   return options.find((item) => item?.default) ?? options[0];
 }
 
+// Parent components may recreate optionsData on every render. Build a stable
+// key from the available part choices so a random bumper selection does not
+// accidentally reinitialize every customization back to its defaults.
+function getOptionsDataKey(data) {
+  if (!data) return "";
+  const getIds = (items) =>
+    (Array.isArray(items) ? items : []).map(
+      (item) => item?._id ?? item?.id ?? item?.modelPath ?? item?.path ?? ""
+    );
+  return JSON.stringify({
+    tyres: getIds(data.tyres),
+    steering: getIds(data.steering),
+    spoiler: getIds(data.spoiler),
+    rearbumper: getIds(data.rearbumper),
+    frontbumper: getIds(data.frontbumper),
+  });
+}
+
 export default function CarEnvironment({ optionsData }) {
   const [customization, dispatch] = useReducer(
     carCustomizationReducer,
@@ -41,9 +60,13 @@ export default function CarEnvironment({ optionsData }) {
   );
   const [modelBounds, setModelBounds] = useState(null);
   const [shadowColor, setShadowColor] = useState(DEFAULT_SHADOW_COLOR);
+  const initializedOptionsKeyRef = useRef(null);
+  const optionsDataKey = getOptionsDataKey(optionsData);
 
   useEffect(() => {
     if (!optionsData) return;
+    if (initializedOptionsKeyRef.current === optionsDataKey) return;
+    initializedOptionsKeyRef.current = optionsDataKey;
 
     dispatch(
       setInitialCustomization({
@@ -55,7 +78,7 @@ export default function CarEnvironment({ optionsData }) {
         customizationData: optionsData,
       })
     );
-  }, [optionsData]);
+  }, [optionsData, optionsDataKey]);
 
   const handleBoundsCalculated = useCallback((bounds) => {
     setModelBounds((previous) => {
@@ -107,8 +130,9 @@ export default function CarEnvironment({ optionsData }) {
                 customization={customization}
               />
               <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
-              <StudioEnvironment />
+              <StudioEnvironment />              
               <CameraControls modelBounds={modelBounds} />
+              {/* <SceneAnimationControls /> */}
               <CustomizationUI />
             </Canvas>
           </SceneVariantProvider>

@@ -4,7 +4,7 @@ import { Html } from "@react-three/drei";
 import { useSceneVariant } from "./SceneVariantContext";
 
 export default function CustomizationUI() {
-  const { variantRegistry, selectGlobalVariant } = useSceneVariant();
+  const { variantRegistry, selectModelVariant, selectGlobalVariant } = useSceneVariant();
   const baseModel = variantRegistry.basecar_varients;
   const variants = baseModel?.variants ?? [];
 
@@ -20,6 +20,9 @@ export default function CustomizationUI() {
             type="button"
             aria-pressed={baseModel.selectedVariant === variant.name}
             onClick={() => {
+              // Apply this variant to the base car only. Seat/part variants
+              // registered under other model IDs remain independent.
+              void selectModelVariant("basecar_varients", variant.name);
               void selectGlobalVariant(variant.name);
             }}
           >

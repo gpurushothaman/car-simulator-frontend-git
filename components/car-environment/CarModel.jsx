@@ -36,7 +36,9 @@ function getModelUrl(modelPath) {
 export default function CarModel({ onBoundsCalculated, customization }) {
   const { scene, animations, parser } = useGLTF(MODEL_PATH);
   const groupRef = useRef(null);
-  const variantRequestRef = useRef(0);
+  // Track pending material loads per mesh so selecting a seat variant
+  // cannot cancel a car-body variant request (and vice versa).
+  const meshRequestRef = useRef(new WeakMap());
   const { invalidate } = useThree();
 
   const { actions, names, mixer } = useAnimations(animations, groupRef);
@@ -54,7 +56,6 @@ export default function CarModel({ onBoundsCalculated, customization }) {
   }, [parser]);
 
   const applyVariant = useCallback(async (variantIndex) => {
-    const requestId = ++variantRequestRef.current;
     const tasks = [];
 
     model.traverse((object) => {
@@ -67,7 +68,9 @@ export default function CarModel({ onBoundsCalculated, customization }) {
         object.userData.originalMaterial = object.material;
       }
 
-      object.material = object.userData.originalMaterial;
+      // Do not reset every mesh to its original material here.
+      // Different variant choices (for example body paint and seat material)
+      // may target different meshes and must remain active together.
       if (!meshExtension) return;
 
       const mapping = meshExtension.mappings?.find((item) =>
@@ -75,10 +78,14 @@ export default function CarModel({ onBoundsCalculated, customization }) {
       );
       if (!mapping) return;
 
+      const requestId = (meshRequestRef.current.get(object) ?? 0) + 1;
+      meshRequestRef.current.set(object, requestId);
+
       tasks.push(
         parser.getDependency("material", mapping.material).then((material) => {
-          // Ignore stale async results if a newer variant was selected.
-          if (requestId !== variantRequestRef.current) return;
+          // Ignore stale results for THIS mesh only. Requests for other meshes
+          // (for example car paint versus seats) remain valid.
+          if (meshRequestRef.current.get(object) !== requestId) return;
           object.material = material;
           parser.assignFinalMaterial(object);
         })
@@ -86,7 +93,7 @@ export default function CarModel({ onBoundsCalculated, customization }) {
     });
 
     await Promise.all(tasks);
-    if (requestId === variantRequestRef.current) invalidate();
+    invalidate();
   }, [model, parser, invalidate]);
 
   useLayoutEffect(() => {
