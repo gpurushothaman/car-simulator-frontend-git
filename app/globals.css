@@ -46,15 +46,16 @@ input {
   z-index: 20;
 }
 .site-brand {
-  font-size: 18px;
-  font-weight: 800;
-  color: #000000;
-  letter-spacing: -0.08em;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
-.site-brand span {
-  color: var(--accent);
-  color: #000000;
-  margin-left: 4px;
+
+.site-logo {
+    display: block;
+    width: 150px;
+    height: 65px;
+    object-fit: contain;
 }
 .site-nav {
   display: flex;
@@ -661,733 +662,305 @@ h1 span {
 
 
 
-                                                    /* THIYAGU Car UI for homepage */
-
-                                                    
-
-/* ==========================================
-   ABIMANYA CAR CUSTOMIZER - HOME PAGE
-   SILVER / GREY PREMIUM THEME
-   Accent: #888987
-========================================== */
+                                                  
+                                        /* =====================================================
+                                                   ABIMANYA CAR CUSTOMIZER - HOME PAGE
+                                                       CLEAN SILVER / GREY THEME
+                                                            Accent: #888987
+                                          ===================================================== */
 
 .car-home {
-  --car-accent: #888987;
-  --car-dark: #191c22;
-  --car-light: #f1f2f4;
-  --car-grey: #d9dbdf;
+    --car-accent: #888987;
+    --car-dark: #191c22;
+    --car-text: #50545c;
 
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-  color: var(--car-dark);
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f4f5f6 0%,
-      #e3e5e8 48%,
-      #f1f2f4 100%
-    );
+    color: var(--car-dark);
+    background: #e5e8eb;
 }
 
 
-/* ==========================================
-   HERO SECTION
-========================================== */
+/* =====================================================
+   1. HERO SECTION
+===================================================== */
 
 .car-home-hero {
-  position: relative;
-  width: 100%;
-  min-height: 590px;
+    position: relative;
 
-  display: flex;
-  align-items: center;
+    width: 100%;
+    min-height: 650px;
 
-  overflow: hidden;
+    display: flex;
+    align-items: center;
 
-  background: linear-gradient(
-    110deg,
-    #f5f5f6,
-    #dfe1e4,
-    #c8cbd0
-  );
+    overflow: hidden;
+    isolation: isolate;
+
+    /* ONE SMOOTH GREY BACKGROUND */
+   .car-home-hero {
+  background: #ffffff;
+}
+
+    border: none;
+    box-shadow: none;
 }
 
 
-/* CAR BACKGROUND IMAGE */
+/* =====================================================
+   2. MAIN CAR IMAGE
+   NATURAL IMAGE - NO OVERLAY
+===================================================== */
 
 .car-home-hero-bg {
-  position: absolute;
-  inset: 0;
+    position: absolute;
 
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(239, 240, 242, 1) 0%,
-      rgba(239, 240, 242, 0.96) 25%,
-      rgba(239, 240, 242, 0.55) 45%,
-      rgba(239, 240, 242, 0.02) 68%
-    ),
-    url("/car.png");
+    inset: 0;
 
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
+    width: 105%;
+    height: 100%;
 
-  transform: scale(1.01);
+    overflow: hidden;
+    background: transparent;
+
+    z-index: 1;
+}
+
+.car-home-hero-bg img {
+    position: absolute;
+
+    width: 75%;
+    height: 100%;
+
+    right: 0;
+    bottom: 0;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: right center;
+
+    /* ORIGINAL IMAGE APPEARANCE */
+    opacity: 1;
+    filter: none;
+    box-shadow: none;
+
+    z-index: 1;
 }
 
 
-/* HERO CONTENT */
+/* REMOVE ALL GRADIENT OVERLAYS */
+
+.car-home-hero::before,
+.car-home-hero::after,
+.car-home-hero-bg::before,
+.car-home-hero-bg::after {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* =====================================================
+   3. HERO TEXT CONTENT
+===================================================== */
 
 .car-home-hero-content {
-  position: relative;
-  z-index: 2;
+    position: relative;
 
-  width: 50%;
-  padding: 50px 0 60px 5%;
+    z-index: 3;
+
+    width: 48%;
+    padding: 50px 0 60px 5%;
 }
 
 .car-home-eyebrow {
-  display: block;
+    display: block;
 
-  color: #777a7d;
+    color: #777a7d;
 
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: 4px;
+    font-size: 15px;
+    font-weight: 750;
+    letter-spacing: 4px;
 
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .car-home-hero-content h1 {
-  margin: 0;
+    margin: 0;
 
-  font-size: clamp(48px, 6vw, 88px);
-  line-height: 1.04;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 1.04;
 
-  font-weight: 850;
-  letter-spacing: -3.5px;
+    font-weight: 850;
+    letter-spacing: -3.5px;
 
-  color: #191c22;
+    color: #191c22;
 }
 
 .car-home-hero-content h1 span {
-  display: block;
-  color: var(--car-accent);
+    display: block;
+    color: var(--car-accent);
 }
 
 .car-home-line {
-  width: 110px;
-  height: 5px;
+    width: 110px;
+    height: 5px;
 
-  margin: 28px 0 22px;
+    margin: 28px 0 22px;
 
-  background: var(--car-accent);
+    background: var(--car-accent);
 }
 
 .car-home-hero-content p {
-  max-width: 440px;
+    max-width: 440px;
 
-  margin: 0 0 35px;
+    margin: 0 0 35px;
 
-  color: #50545c;
+    color: var(--car-text);
 
-  font-size: 20px;
-  line-height: 1.7;
+    font-size: 20px;
+    line-height: 1.7;
 }
 
 
-/* MAIN BUTTON */
+/* =====================================================
+   4. CUSTOMIZE YOUR CAR BUTTON
+===================================================== */
 
 .car-home-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
 
-  padding: 18px 30px;
+    padding: 18px 30px;
 
-  border-radius: 50px;
+    border-radius: 50px;
 
-  color: #fff;
-  background: var(--car-dark);
+    color: #fff;
+    background: var(--car-dark);
 
-  font-size: 17px;
-  font-weight: 700;
+    font-size: 17px;
+    font-weight: 700;
 
-  text-decoration: none;
+    text-decoration: none;
 
-  box-shadow: 0 10px 25px rgba(30, 35, 40, 0.15);
+    box-shadow: 0 10px 25px rgba(30, 35, 40, 0.15);
 
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .car-home-button:hover {
-  color: #fff;
-  background: var(--car-accent);
-  transform: translateY(-4px);
+    color: #fff;
+    background: var(--car-accent);
 
-  box-shadow: 0 12px 25px rgba(80, 80, 80, 0.2);
+    transform: translateY(-4px);
+
+    box-shadow: 0 12px 25px rgba(80, 80, 80, 0.2);
 }
 
 .car-home-button span {
-  font-size: 23px;
-  transition: transform 0.3s ease;
+    font-size: 23px;
+    transition: transform 0.3s ease;
 }
 
 .car-home-button:hover span {
-  transform: translateX(6px);
+    transform: translateX(6px);
 }
 
 
-/* HERO BOTTOM LABEL */
+/* =====================================================
+   5. HERO BOTTOM LABEL
+===================================================== */
 
 .car-home-hero-bottom {
-  position: absolute;
-  z-index: 3;
+    position: absolute;
 
-  bottom: 22px;
-  left: 5%;
+    z-index: 3;
 
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    bottom: 22px;
+    left: 5%;
 
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-  color: #777a7d;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 2px;
+
+    color: #777a7d;
 }
 
 .car-home-bottom-line {
-  width: 45px;
-  height: 1px;
-  background: var(--car-accent);
+    width: 45px;
+    height: 1px;
+
+    background: var(--car-accent);
 }
 
 
-/* ==========================================
-   EXPLORE CAR MODELS
-========================================== */
 
-.car-home-models {
-  width: 100%;
-
-  padding: 35px 4% 45px;
-}
-
-.car-home-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.car-home-section-heading span {
-  flex: 1;
-  height: 1px;
-  background: #bfc1c5;
-}
-
-.car-home-section-heading h2 {
-  margin: 0;
-
-  font-size: clamp(28px, 3.5vw, 43px);
-  font-weight: 850;
-  letter-spacing: -1.5px;
-
-  color: #1d2027;
-  white-space: nowrap;
-}
-
-.car-home-title-underline {
-  width: 80px;
-  height: 4px;
-
-  margin: 14px auto 30px;
-
-  background: var(--car-accent);
-}
-
-
-/* MODEL GRID */
-
-.car-home-model-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-
-/* MODEL CARD */
-
-.car-home-model-card {
-  overflow: hidden;
-
-  border: 1px solid #c4c6ca;
-  border-radius: 16px;
-
-  background: linear-gradient(
-    145deg,
-    #f5f5f6,
-    #d8dade
-  );
-
-  box-shadow: 0 7px 18px rgba(35, 40, 48, 0.06);
-
-  transition: all 0.35s ease;
-}
-
-.car-home-model-card:hover {
-  transform: translateY(-7px);
-
-  border-color: var(--car-accent);
-
-  box-shadow: 0 16px 30px rgba(35, 40, 48, 0.14);
-}
-
-
-/* MODEL IMAGES */
-
-.car-home-model-image {
-  position: relative;
-
-  width: 100%;
-  height: 205px;
-
-  background-color: #d9dbdf;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  transition: background-size 0.4s ease;
-}
-
-/* Replace these paths with your own car images */
-
-.car-model-one {
-  background-image: url("/car.png");
-}
-
-.car-model-two {
-  background-image: url("/car.png");
-}
-
-.car-model-three {
-  background-image: url("/car.png");
-}
-
-
-.car-home-model-number {
-  position: absolute;
-
-  top: 14px;
-  left: 16px;
-
-  padding: 6px 10px;
-
-  color: #fff;
-  background: rgba(35, 38, 43, 0.65);
-
-  border-radius: 5px;
-
-  font-size: 11px;
-  letter-spacing: 1px;
-}
-
-
-/* MODEL DETAILS */
-
-.car-home-model-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 17px 20px;
-}
-
-.car-home-model-info h3 {
-  margin: 0 0 5px;
-
-  font-size: 19px;
-  font-weight: 800;
-
-  color: #24272d;
-}
-
-.car-home-model-info p {
-  margin: 0;
-
-  font-size: 13px;
-  color: #70747b;
-}
-
-.car-home-model-arrow {
-  width: 37px;
-  height: 37px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  color: #fff;
-  background: var(--car-accent);
-
-  font-size: 19px;
-
-  transition: all 0.3s ease;
-}
-
-.car-home-model-card:hover .car-home-model-arrow {
-  background: var(--car-dark);
-  transform: rotate(45deg);
-}
-
-
-/* ==========================================
-   CUSTOMIZE BANNER
-========================================== */
-
-.car-home-customize {
-  position: relative;
-
-  width: 98%;
-  min-height: 180px;
-
-  margin: 0 auto 35px;
-  padding: 30px 45px;
-  margin-top: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-
-  overflow: hidden;
-
-  border: 1px solid #c0c3c8;
-  border-radius: 19px;
-
-  background: linear-gradient(
-    110deg,
-    #b8bbc0,
-    #f0f1f3 50%,
-    #c5c8cd
-  );
-}
-
-
-/* BANNER BACKGROUND */
-
-.car-home-banner-bg {
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(225, 227, 230, 0.08),
-      rgba(225, 227, 230, 0.78) 32%,
-      rgba(225, 227, 230, 0.94) 70%
-    ),
-    url("/car.png");
-
-  background-size: cover;
-  background-position: left 45%;
-  background-repeat: no-repeat;
-
-  opacity: 0.8;
-}
-
-
-/* BANNER CONTENT */
-
-.car-home-banner-content {
-  position: relative;
-  z-index: 2;
-
-  flex: 1;
-  padding-left: 22%;
-}
-
-.car-home-banner-content > span {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 3px;
-
-  color: #777a7d;
-}
-
-.car-home-banner-content h2 {
-  margin: 0;
-
-  font-size: clamp(27px, 3.5vw, 44px);
-  font-weight: 850;
-  letter-spacing: -1.5px;
-
-  color: #20232a;
-}
-
-.car-home-banner-content h2 strong {
-  color: var(--car-accent);
-}
-
-.car-home-banner-content p {
-  margin: 6px 0 0;
-
-  font-size: 19px;
-  color: #50545c;
-}
-
-
-/* BANNER BUTTON */
-
-.car-home-banner-button {
-  position: relative;
-  z-index: 2;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-
-  flex-shrink: 0;
-
-  padding: 15px 24px;
-
-  border-radius: 40px;
-
-  color: #fff;
-  background: var(--car-accent);
-
-  font-size: 14px;
-  font-weight: 750;
-
-  text-decoration: none;
-
-  transition: all 0.3s ease;
-}
-
-.car-home-banner-button:hover {
-  color: #fff;
-  background: #666866;
-  transform: translateY(-3px);
-}
-
-.car-home-banner-button span {
-  font-size: 20px;
-}
-
-
-/* ==========================================
-   FOOTER STRIP
-========================================== */
-
-.car-home-footer-strip {
-  width: 100%;
-
-  padding: 15px 5%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-
-  border-top: 1px solid #d0d2d5;
-
-  color: #818489;
-
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-
-/* ==========================================
-   TABLET RESPONSIVE
-========================================== */
-
-@media (max-width: 1000px) {
-
-  .car-home-hero {
-    min-height: 490px;
-  }
-
-  .car-home-hero-content {
-    width: 55%;
-  }
-
-  .car-home-hero-content h1 {
-    font-size: 58px;
-  }
-
-  .car-home-model-image {
-    height: 160px;
-  }
-
-  .car-home-customize {
-    padding: 25px;
-  }
-
-  .car-home-banner-content {
-    padding-left: 15%;
-  }
-
-}
-
-
-/* ==========================================
-   MOBILE RESPONSIVE
-========================================== */
+/* =====================================================
+   6. MOBILE RESPONSIVE
+   ONLY NECESSARY MEDIA QUERY
+===================================================== */
 
 @media (max-width: 650px) {
 
-  .car-home-hero {
-    min-height: 620px;
-    align-items: flex-start;
-  }
+    .car-home-hero {
+        min-height: 650px;
+        align-items: flex-start;
+    }
 
-  .car-home-hero-bg {
-    background-image:
-      linear-gradient(
-        180deg,
-        rgba(239, 240, 242, 0.98) 0%,
-        rgba(239, 240, 242, 0.92) 42%,
-        rgba(239, 240, 242, 0.08) 100%
-      ),
-      url("/car.png");
+    .car-home-hero-content {
+        width: 100%;
+        padding: 45px 6% 0;
+    }
 
-    background-size: auto 100%, auto 55%;
-    background-position: center, bottom center;
-  }
+    .car-home-hero-content h1 {
+        font-size: 49px;
+        letter-spacing: -2px;
+    }
 
-  .car-home-hero-content {
-    width: 100%;
-    padding: 55px 6% 0;
-  }
+    .car-home-hero-content p {
+        font-size: 16px;
+        max-width: 340px;
+    }
 
-  .car-home-hero-content h1 {
-    font-size: 49px;
-    letter-spacing: -2px;
-  }
+    .car-home-hero-bg img {
+        width: 100%;
+        height: 55%;
 
-  .car-home-hero-content p {
-    font-size: 16px;
-    max-width: 340px;
-  }
+        object-fit: contain;
+        object-position: center bottom;
+    }
 
-  .car-home-button {
-    padding: 15px 22px;
-    font-size: 14px;
-  }
+    .car-home-button {
+        padding: 15px 22px;
+        font-size: 14px;
+    }
 
-  .car-home-models {
-    padding: 30px 5%;
-  }
+    .car-home-customize {
+        width: 90%;
 
-  .car-home-section-heading {
-    gap: 10px;
-  }
+        min-height: 180px;
 
-  .car-home-section-heading h2 {
-    font-size: 23px;
-    letter-spacing: -0.5px;
-  }
+        flex-direction: column;
+        align-items: flex-start;
 
-  .car-home-model-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
+        padding: 30px 22px;
+        gap: 22px;
+    }
 
-  .car-home-model-image {
-    height: 210px;
-  }
+    .car-home-banner-content h2 {
+        font-size: 29px;
+    }
 
-  .car-home-customize {
-    width: 90%;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 30px 22px;
-    gap: 22px;
-  }
+    .car-home-banner-content p {
+        font-size: 16px;
+    }
 
-  .car-home-banner-bg {
-    background-position: left center;
-  }
-
-  .car-home-banner-content {
-    padding-left: 0;
-  }
-
-  .car-home-banner-content h2 {
-    font-size: 29px;
-  }
-
-  .car-home-banner-content p {
-    font-size: 16px;
-  }
-
-  .car-home-footer-strip {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* thiayagu alast update/
-
-/* ELECTRIC CAR IMAGE FIX */
-
-.car-home-model-card {
-  overflow: hidden;
-}
-
-.car-home-model-image {
-  position: relative;
-  width: 100%;
-  height: 205px;
-  overflow: hidden;
-  background: #d9dbdf;
-}
-
-.car-home-model-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-.car-home-model-info {
-  position: relative;
-  z-index: 2;
-  min-height: 85px;
-  background: linear-gradient(
-    135deg,
-    #f0f1f3,
-    #d9dbdf
-  );
-  padding: 17px 20px;
 }

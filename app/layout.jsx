@@ -11,7 +11,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header className="site-header">
-          <Link className="site-brand" href="/">ENV<span>MAPS</span></Link>
+          <Link className="site-brand" href="/">
+            <img
+              src="/Dsimilar.png"
+              alt="Company Logo"
+              className="site-logo"
+            />
+          </Link>
           <nav className="site-nav" aria-label="Main navigation">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
