@@ -11,6 +11,15 @@ import CarShadows from "./CarShadows";
 import CameraControls from "./CameraControls";
 import ShadowColorPicker from "./ShadowColorPicker";
 import CarCustomization from "./CarCustomization";
+//Animation - context & controls
+import {
+  SceneAnimationProvider,
+  useSceneAnimation,
+} from "./SceneAnimationContext";
+import SceneAnimationControls from "./SceneAnimationControls";
+//Material varients - context & controls
+import { SceneVariantProvider } from "./SceneVariantContext";
+import CustomizationUI from "./CustomizationUI";
 
 import {
   CAMERA_CONFIG,
@@ -23,9 +32,7 @@ import {
   INITIAL_CAR_CUSTOMIZATION_STATE,
 } from "@/components/redux/carCustomization";
 
-import {
-    setInitialCustomization,
-  } from "@/components/redux/carCustomization/actions";
+import { setInitialCustomization } from "@/components/redux/carCustomization/actions";
 
 function getDefaultValue(options, fallback) {
   if (!Array.isArray(options) || options.length === 0) {
@@ -34,11 +41,11 @@ function getDefaultValue(options, fallback) {
 
   const selected = options.find((item) => item.default);
 
-  return (selected ?? options[0]);
+  return selected ?? options[0];
 }
 
 export default function CarEnvironment({ optionsData }) {
-    console.log("data:=",optionsData)
+  console.log("data:=", optionsData);
   const [modelBounds, setModelBounds] = useState(null);
 
   const [shadowColor, setShadowColor] = useState(DEFAULT_SHADOW_COLOR);
@@ -59,11 +66,21 @@ export default function CarEnvironment({ optionsData }) {
         ),
 
         spoiler: getDefaultValue(
-          optionsData.spoilers,
+          optionsData.spoiler,
           INITIAL_CAR_CUSTOMIZATION_STATE.spoiler
         ),
 
-        customizationData : optionsData
+        rearBumper: getDefaultValue(
+          optionsData.rearbumper,
+          INITIAL_CAR_CUSTOMIZATION_STATE.rearBumper
+        ),
+
+        frontBumper: getDefaultValue(
+          optionsData.frontbumper,
+          INITIAL_CAR_CUSTOMIZATION_STATE.frontBumper
+        ),
+
+        customizationData: optionsData,
       })
     );
   }, [optionsData]);
@@ -94,39 +111,45 @@ export default function CarEnvironment({ optionsData }) {
           position: "relative",
         }}
       >
-        <Canvas
-          shadows
-          camera={CAMERA_CONFIG}
-          dpr={[1, 2]}
-          gl={{
-            antialias: true,
-            alpha: false,
-            powerPreference: "high-performance",
-            ...RENDERER_CONFIG,
-          }}
-          onCreated={({ gl, scene }) => {
-            gl.toneMapping = THREE.LinearToneMapping;
-            gl.toneMappingExposure = 1.0;
-            gl.outputColorSpace = THREE.SRGBColorSpace;
-            gl.shadowMap.enabled = true;
-            gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        <SceneAnimationProvider>
+          <SceneVariantProvider>
+            <Canvas
+              shadows
+              camera={CAMERA_CONFIG}
+              dpr={[1, 2]}
+              gl={{
+                antialias: true,
+                alpha: false,
+                powerPreference: "high-performance",
+                ...RENDERER_CONFIG,
+              }}
+              onCreated={({ gl, scene }) => {
+                gl.toneMapping = THREE.LinearToneMapping;
+                gl.toneMappingExposure = 1.0;
+                gl.outputColorSpace = THREE.SRGBColorSpace;
+                gl.shadowMap.enabled = true;
+                gl.shadowMap.type = THREE.PCFSoftShadowMap;
 
-            scene.background = new THREE.Color("#eeeeee");
-          }}
-        >
-          <StudioLighting />
+                scene.background = new THREE.Color("#eeeeee");
+              }}
+            >
+              <StudioLighting />
 
-          <CarModel
-            onBoundsCalculated={handleBoundsCalculated}
-            customization={customization}
-          />
+              <CarModel
+                onBoundsCalculated={handleBoundsCalculated}
+                customization={customization}
+              />
 
-          <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
+              <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
 
-          <StudioEnvironment />
+              <StudioEnvironment />
 
-          <CameraControls modelBounds={modelBounds} />
-        </Canvas>
+              <CameraControls modelBounds={modelBounds} />
+              {/* <SceneAnimationControls /> */}
+              <CustomizationUI />
+            </Canvas>
+          </SceneVariantProvider>
+        </SceneAnimationProvider>
 
         <ShadowColorPicker
           shadowColor={shadowColor}

@@ -1,16 +1,13 @@
 "use client";
 
 import { AccumulativeShadows, RandomizedLight } from "@react-three/drei";
-
 import { SHADOW_GAP } from "./carEnvironment.constants";
 
 export default function CarShadows({ modelBounds, shadowColor }) {
-  console.log(modelBounds);
   if (!modelBounds) return null;
 
   return (
     <AccumulativeShadows
-      key={`${modelBounds.bottomY}-${modelBounds.shadowSize}`}
       position={[
         modelBounds.centerX,
         modelBounds.bottomY - SHADOW_GAP,

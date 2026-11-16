@@ -1,57 +1,108 @@
 "use client";
 
 import * as THREE from "three";
-import { useLayoutEffect, useMemo, useRef, useEffect, useState } from "react";
-import { useGLTF, useAnimations, Html  } from "@react-three/drei";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 
+import { useSceneAnimation } from "./SceneAnimationContext";
+import { useSceneVariant } from "./SceneVariantContext";
 import ReplacementPart from "./ReplacementPart";
-
 import { MODEL_PATH } from "./carEnvironment.constants";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 function enableShadow(model) {
   model.traverse((object) => {
-    if (object.isMesh) {
-      object.castShadow = true;
-      object.receiveShadow = true;
-    }
+    if (!object.isMesh) return;
+    object.castShadow = true;
+    object.receiveShadow = true;
   });
 }
 
+function getModelUrl(modelPath) {
+  if (typeof modelPath !== "string" || !modelPath.trim()) return null;
+  const path = modelPath.trim();
+
+  if (/^https?:\/\//i.test(path)) return path;
+  if (!SERVER_URL) {
+    console.error("NEXT_PUBLIC_SERVER_URL is not configured; cannot load replacement model:", path);
+    return null;
+  }
+
+  return `${SERVER_URL.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+}
+
 export default function CarModel({ onBoundsCalculated, customization }) {
-  const { scene, animations  } = useGLTF(MODEL_PATH);
-  console.log("Animations:", animations);
-
+  const { scene, animations, parser } = useGLTF(MODEL_PATH);
   const groupRef = useRef(null);
-  const [activeAnimation, setActiveAnimation] = useState(null);
+  const variantRequestRef = useRef(0);
+  const { invalidate } = useThree();
 
-  const model = useMemo(() => {
-    return scene.clone(true);
-  }, [scene]);
+  const { actions, names, mixer } = useAnimations(animations, groupRef);
+  const { registerModelAnimations, unregisterModelAnimations } = useSceneAnimation();
+  const { registerModelVariants, unregisterModelVariants } = useSceneVariant();
 
-  const { actions, names, mixer } = useAnimations(
-    animations,
-    groupRef
-  );
+  const model = useMemo(() => scene.clone(true), [scene]);
+
+  const variants = useMemo(() => {
+    const definitions = parser.json?.extensions?.KHR_materials_variants?.variants ?? [];
+    return definitions.map((variant, index) => ({
+      index,
+      name: variant.name || `Variant ${index + 1}`,
+    }));
+  }, [parser]);
+
+  const applyVariant = useCallback(async (variantIndex) => {
+    const requestId = ++variantRequestRef.current;
+    const tasks = [];
+
+    model.traverse((object) => {
+      if (!object.isMesh) return;
+
+      const meshExtension =
+        object.userData?.gltfExtensions?.KHR_materials_variants;
+
+      if (!Object.prototype.hasOwnProperty.call(object.userData, "originalMaterial")) {
+        object.userData.originalMaterial = object.material;
+      }
+
+      object.material = object.userData.originalMaterial;
+      if (!meshExtension) return;
+
+      const mapping = meshExtension.mappings?.find((item) =>
+        item.variants?.includes(variantIndex)
+      );
+      if (!mapping) return;
+
+      tasks.push(
+        parser.getDependency("material", mapping.material).then((material) => {
+          // Ignore stale async results if a newer variant was selected.
+          if (requestId !== variantRequestRef.current) return;
+          object.material = material;
+          parser.assignFinalMaterial(object);
+        })
+      );
+    });
+
+    await Promise.all(tasks);
+    if (requestId === variantRequestRef.current) invalidate();
+  }, [model, parser, invalidate]);
 
   useLayoutEffect(() => {
     enableShadow(model);
     const group = groupRef.current;
-
     if (!group) return;
 
     group.updateMatrixWorld(true);
+    const bounds = new THREE.Box3().setFromObject(group, true);
+    if (bounds.isEmpty()) return;
 
-    const box = new THREE.Box3().setFromObject(group, true);
-
-    if (box.isEmpty()) return;
-
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
+    const size = bounds.getSize(new THREE.Vector3());
+    const center = bounds.getCenter(new THREE.Vector3());
 
     onBoundsCalculated({
-      bottomY: box.min.y,
+      bottomY: bounds.min.y,
       centerX: center.x,
       centerY: center.y,
       centerZ: center.z,
@@ -60,110 +111,61 @@ export default function CarModel({ onBoundsCalculated, customization }) {
     });
   }, [model, onBoundsCalculated]);
 
-  
+  useEffect(() => {
+    if (!names.length) return undefined;
 
-    // Play selected animation
-    const playAnimation = (name) => {
-      console.log("hai");
+    registerModelAnimations("base", actions, names, mixer);
+    return () => {
+      unregisterModelAnimations("base");
       mixer.stopAllAction();
-  
-      const action = actions[name];
-  
-      if (!action) return;
-  
-      action.reset();
-      action.setLoop(THREE.LoopOnce, 1);
-      action.clampWhenFinished = true;
-      action.play();
-  
-      setActiveAnimation(name);
     };
-  
-    // Stop all animations
-    const stopAnimation = () => {
-      mixer.stopAllAction();
-      setActiveAnimation(null);
-    };
-  
+  }, [
+    actions,
+    names,
+    mixer,
+    registerModelAnimations,
+    unregisterModelAnimations,
+  ]);
 
-  const steeringPath = `${SERVER_URL}/${customization.steering?.modelPath}`;
+  useEffect(() => {
+    if (!variants.length) return undefined;
 
-  const tyrePath = `${SERVER_URL}/${customization.tyre?.modelPath}`;
+    registerModelVariants("basecar_varients", model, variants, applyVariant);
+    return () => unregisterModelVariants("basecar_varients");
+  }, [
+    variants,
+    model,
+    applyVariant,
+    registerModelVariants,
+    unregisterModelVariants,
+  ]);
 
-  const spoilerPath = `${SERVER_URL}/${customization.spoiler?.modelPath}`;
-
-  const rearBumperPath = `${SERVER_URL}/${customization.rearBumper?.modelPath}`;
-
-  const frontBumperPath = `${SERVER_URL}/${customization.frontBumper?.modelPath}`;
+  const steeringPath = getModelUrl(customization?.steering?.modelPath);
+  const tyrePath = getModelUrl(customization?.tyre?.modelPath);
+  const spoilerPath = getModelUrl(customization?.spoiler?.modelPath);
+  const rearBumperPath = getModelUrl(customization?.rearBumper?.modelPath);
+  const frontBumperPath = getModelUrl(customization?.frontBumper?.modelPath);
 
   return (
-    <>
-      {/* <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0, 0]}
-        receiveShadow
-        scale={[0.3, 0.3, 0.3]}
-      >
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#ff0000" />
-      </mesh>
+    <group ref={groupRef}>
+      <primitive object={model} />
 
-      <mesh position={[0, 0, 0]} castShadow receiveShadow>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#ff0000" roughness={0.4} metalness={0.1} />
-      </mesh> */}
-
-      <group ref={groupRef}>
-        {/* Original car body with original parts hidden */}
-        <primitive object={model} />
-
-        {/* Replacement steering wheel */}
-        {steeringPath && (
-          <ReplacementPart  path={steeringPath} />
-        )}
-
-        {/* Replacement tyres: four copies of one tyre GLB */}
-        {tyrePath && <ReplacementPart  path={tyrePath} />}
-
-        {/* Replacement spoiler: four copies of one tyre GLB */}
-        {spoilerPath && <ReplacementPart  path={spoilerPath} />}
-
-        {/* Replacement rearBumper: four copies of one tyre GLB */}
-        {rearBumperPath && <ReplacementPart path={rearBumperPath} />}
-
-        {/* Replacement frontBumper: four copies of one tyre GLB */}
-        {frontBumperPath && <ReplacementPart path={frontBumperPath} />}
-      </group>
-
-
-
-       {/* Animation UI */}
-       <Html fullscreen>
-        <div className="animation-panel">
-          <h3>Model Animations</h3>
-
-          {names.length === 0 ? (
-            <p>No animations found</p>
-          ) : (
-            names.map((name) => (
-              <button
-                key={name}
-                onClick={() => playAnimation(name)}
-                className={
-                  activeAnimation === name ? "active" : ""
-                }
-              >
-                ▶ {name}
-              </button>
-            ))
-          )}
-
-          <button onClick={stopAnimation}>
-            ■ Stop
-          </button>
-        </div>
-      </Html>
-    </>
+      {steeringPath && (
+        <ReplacementPart key={`steering-${steeringPath}`} path={steeringPath} partId="steering" />
+      )}
+      {tyrePath && (
+        <ReplacementPart key={`tyre-${tyrePath}`} path={tyrePath} partId="tyre" />
+      )}
+      {spoilerPath && (
+        <ReplacementPart key={`spoiler-${spoilerPath}`} path={spoilerPath} partId="spoiler" />
+      )}
+      {rearBumperPath && (
+        <ReplacementPart key={`rearBumper-${rearBumperPath}`} path={rearBumperPath} partId="rearBumper" />
+      )}
+      {frontBumperPath && (
+        <ReplacementPart key={`frontBumper-${frontBumperPath}`} path={frontBumperPath} partId="frontBumper" />
+      )}
+    </group>
   );
 }
 
