@@ -2,10 +2,6 @@ import * as THREE from "three";
 
 export const MODEL_PATH = "/Car.glb";
 
-export const MODEL_SCALE = 1.6;
-
-export const MODEL_ROTATION = [0, Math.PI / 5, 0];
-
 export const SHADOW_GAP = 0.02;
 
 export const CAMERA_CONFIG = {

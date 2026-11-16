@@ -8,14 +8,9 @@ import {
   setFrontBumper,
   setRearBumper,
 } from "@/components/redux/carCustomization";
-
 import { setInitialCustomization } from "@/components/redux/carCustomization/actions";
 
-const sectionStyle = {
-  flex: "1 1 220px",
-  minWidth: 0,
-};
-
+const sectionStyle = { flex: "1 1 220px", minWidth: 0 };
 const labelStyle = {
   display: "block",
   marginBottom: 10,
@@ -34,83 +29,67 @@ const buttonStyle = (active) => ({
   fontSize: 13,
 });
 
+function getOptionId(option) {
+  return option?._id ?? option?.id ?? option?.modelPath;
+}
+
+function getOptionLabel(option) {
+  return (
+    option?.tyreName ||
+    option?.steeringName ||
+    option?.spoilerName ||
+    option?.frontbumperName ||
+    option?.rearbumperName ||
+    option?.name ||
+    "Unnamed option"
+  );
+}
+
 function OptionGroup({ title, options, value, onChange }) {
+  const safeOptions = Array.isArray(options) ? options : [];
+
   return (
     <section style={sectionStyle}>
-      <label style={labelStyle}>{title}</label>
+      <div style={labelStyle}>{title}</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        {safeOptions.map((option, index) => {
+          const optionId = getOptionId(option);
+          const active = value === optionId;
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 8,
-        }}
-      >
-        {options?.filter((option, index) => index !== 0).map((option) => (
-          <button
-            key={option._id}
-            type="button"
-            aria-pressed={value === option._id}
-            onClick={() => onChange(option._id, option)}
-            style={buttonStyle(value === option._id)}
-          >
-            {option?.tyreName ||
-              option?.steeringName ||
-              option?.spoilerName ||
-              option?.frontbumperName ||
-              option?.rearbumperName}
-          </button>
-        ))}
+          return (
+            <button
+              key={optionId ?? `${title}-${index}`}
+              type="button"
+              aria-pressed={active}
+              onClick={() => onChange(option)}
+              style={buttonStyle(active)}
+            >
+              {getOptionLabel(option)}
+            </button>
+          );
+        })}
       </div>
     </section>
   );
 }
 
 function getDefaultValue(options, fallback) {
-  if (!Array.isArray(options) || options.length === 0) {
-    return fallback;
-  }
-
-  const selected = options.find((item) => item.default);
-
-  return selected ?? options[0];
+  if (!Array.isArray(options) || options.length === 0) return fallback;
+  return options.find((item) => item?.default) ?? options[0];
 }
 
 export default function CarCustomization({ customization, dispatch }) {
-  console.log("track:", customization);
-  const handleChangeTyre = (selectedTyre) => {
-    dispatch(setTyre(selectedTyre));
-  };
+  const data = customization?.customizationData;
 
   const handleReset = () => {
     dispatch(
       setInitialCustomization({
-        tyre: getDefaultValue(
-          customization?.customizationData?.tyres,
-          INITIAL_CAR_CUSTOMIZATION_STATE.tyre
-        ),
-
-        steering: getDefaultValue(
-          customization?.customizationData?.steering,
-          INITIAL_CAR_CUSTOMIZATION_STATE.steering
-        ),
-
-        spoiler: getDefaultValue(
-          customization?.customizationData?.spoiler,
-          INITIAL_CAR_CUSTOMIZATION_STATE.spoiler
-        ),
-
-        rearBumper: getDefaultValue(
-          customization?.customizationData?.rearbumper,
-          INITIAL_CAR_CUSTOMIZATION_STATE.rearBumper
-        ),
-
-        frontBumper: getDefaultValue(
-          customization?.customizationData?.frontbumper,
-          INITIAL_CAR_CUSTOMIZATION_STATE.frontBumper
-        ),
-
-        customizationData: customization?.customizationData,
+        tyre: getDefaultValue(data?.tyres, INITIAL_CAR_CUSTOMIZATION_STATE.tyre),
+        steering: getDefaultValue(data?.steering, INITIAL_CAR_CUSTOMIZATION_STATE.steering),
+        spoiler: getDefaultValue(data?.spoiler, INITIAL_CAR_CUSTOMIZATION_STATE.spoiler),
+        rearBumper: getDefaultValue(data?.rearbumper, INITIAL_CAR_CUSTOMIZATION_STATE.rearBumper),
+        frontBumper: getDefaultValue(data?.frontbumper, INITIAL_CAR_CUSTOMIZATION_STATE.frontBumper),
+        customizationData: data,
       })
     );
   };
@@ -118,18 +97,13 @@ export default function CarCustomization({ customization, dispatch }) {
   return (
     <section
       style={{
-        padding: "24px",
+        padding: 24,
         background: "#f8fafc",
         borderTop: "1px solid #e2e8f0",
         color: "#111827",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-        }}
-      >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div
           style={{
             display: "flex",
@@ -142,21 +116,13 @@ export default function CarCustomization({ customization, dispatch }) {
         >
           <div>
             <h2 style={{ margin: 0, fontSize: 23 }}>Customize Your Car</h2>
-
-            <p
-              style={{
-                margin: "6px 0 0",
-                color: "#64748b",
-                fontSize: 14,
-              }}
-            >
+            <p style={{ margin: "6px 0 0", color: "#64748b", fontSize: 14 }}>
               Select your preferred car parts.
             </p>
           </div>
-
           <button
             type="button"
-            onClick={() => handleReset()}
+            onClick={handleReset}
             style={{
               padding: "10px 16px",
               borderRadius: 8,
@@ -170,54 +136,36 @@ export default function CarCustomization({ customization, dispatch }) {
           </button>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 28,
-          }}
-        >
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 28 }}>
           <OptionGroup
             title="Tyres"
-            options={customization?.customizationData?.tyres}
-            value={customization?.customizationData?.tyres}
-            onChange={(value, selectedTyre) => handleChangeTyre(selectedTyre)}
+            options={data?.tyres}
+            value={getOptionId(customization?.tyre)}
+            onChange={(option) => dispatch(setTyre(option))}
           />
-
           <OptionGroup
             title="Steering Wheels"
-            options={customization?.customizationData?.steering}
-            value={customization?.customizationData?.steering}
-            onChange={(value, selectedSteering) =>
-              dispatch(setSteering(selectedSteering))
-            }
+            options={data?.steering}
+            value={getOptionId(customization?.steering)}
+            onChange={(option) => dispatch(setSteering(option))}
           />
-
           <OptionGroup
             title="Spoilers"
-            options={customization?.customizationData?.spoiler}
-            value={customization?.customizationData?.spoiler}
-            onChange={(value, selectedSpoiler) =>
-              dispatch(setSpoiler(selectedSpoiler))
-            }
+            options={data?.spoiler}
+            value={getOptionId(customization?.spoiler)}
+            onChange={(option) => dispatch(setSpoiler(option))}
           />
-
           <OptionGroup
             title="Front Bumpers"
-            options={customization?.customizationData?.frontbumper}
-            value={customization?.customizationData?.frontbumper}
-            onChange={(value, selectedFrontBumper) =>
-              dispatch(setFrontBumper(selectedFrontBumper))
-            }
+            options={data?.frontbumper}
+            value={getOptionId(customization?.frontBumper)}
+            onChange={(option) => dispatch(setFrontBumper(option))}
           />
-
           <OptionGroup
             title="Rear Bumpers"
-            options={customization?.customizationData?.rearbumper}
-            value={customization?.customizationData?.rearbumper}
-            onChange={(value, selectedRearBumper) =>
-              dispatch(setRearBumper(selectedRearBumper))
-            }
+            options={data?.rearbumper}
+            value={getOptionId(customization?.rearBumper)}
+            onChange={(option) => dispatch(setRearBumper(option))}
           />
         </div>
       </div>

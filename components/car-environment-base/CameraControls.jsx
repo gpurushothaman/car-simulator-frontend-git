@@ -11,8 +11,8 @@ export default function CameraControls({ modelBounds }) {
       enableRotate
       enableZoom
       enablePan={false}
-      minDistance={4}
-      maxDistance={18}
+      // minDistance={4}
+      // maxDistance={18}
       minPolarAngle={Math.PI / 3.5}
       maxPolarAngle={Math.PI / 2}
       target={[
