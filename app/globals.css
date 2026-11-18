@@ -627,7 +627,8 @@ h1 span {
 
 .animation-panel {
   position: absolute;
-  font-size:10px;
+  top: 20px;
+  left: 20px;
   padding: 15px;
   width: 220px;
   background: rgba(20, 20, 20, 0.9);
@@ -963,4 +964,487 @@ h1 span {
         font-size: 16px;
     }
 
+}
+
+                                      /* //////////////////////////////////////////////
+                                            THIYAGU - TOOL PAGE (CUSTOMIZATION PAGE)
+                                                PREMIUM SILVER CAR CUSTOMIZATION
+                                       ///////////////////////////////////////////////  */
+
+
+
+
+/* =========================================
+   MAIN CAR CUSTOMIZER LAYOUT
+========================================= */
+
+.car-tool-layout {
+  --header-height: 0px;
+  --panel-height: 119px;
+
+  width: 100%;
+  height: calc(100dvh - var(--header-height));
+  min-height: 0;
+  max-height: calc(100dvh - var(--header-height));
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background: #eeeeee;
+}
+
+/* 3D Car Scene */
+.car-tool-scene {
+  position: relative;
+
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 0;
+
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.car-tool-scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* =========================================
+   BOTTOM CUSTOMIZATION PANEL
+========================================= */
+
+.car-custom-panel {
+  position: relative;
+  z-index: 20;
+
+  width: 100%;
+  height: var(--panel-height);
+  min-height: var(--panel-height);
+  flex: 0 0 var(--panel-height);
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 8px 18px;
+
+  box-sizing: border-box;
+  overflow: visible;
+
+  /* Existing grey background */
+  background: linear-gradient(
+    120deg,
+    #9ba2ab 0%,
+    #7b818a 50%,
+    #7b818a 100%
+  );
+
+  border-top: 1px solid #c4cbd3;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.car-custom-panel-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+
+/* =========================================
+   RESET BUTTON
+========================================= */
+
+.custom-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  min-height: 25px;
+  margin-bottom: 7px;
+}
+
+.custom-reset-button {
+  padding: 5px 13px;
+
+  border: 1px solid #d5dbe1;
+  border-radius: 6px;
+
+  color: #ffffff;
+  background: linear-gradient(
+    145deg,
+    #5b6570,
+    #343d47
+  );
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.25),
+    0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+/* =========================================
+   FIVE EQUAL DROPDOWN SECTIONS
+========================================= */
+
+.car-options-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+  width: 100%;
+
+  align-items: start;
+}
+
+.car-option-section {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+}
+
+
+/* =========================================
+   DROPDOWN TRIGGER BUTTON
+========================================= */
+
+.car-option-trigger {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 6px 12px;
+
+  border: 1px solid #626a74;
+  border-radius: 7px;
+
+  background: #343b44;
+  color: #ffffff;
+
+  cursor: pointer;
+  text-align: left;
+
+  transition: all 0.2s ease;
+}
+
+.car-option-trigger:hover,
+.car-option-trigger.active {
+  background: #4a535e;
+  border-color: #aeb8c2;
+}
+
+.car-option-trigger-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  min-width: 0;
+  flex: 1;
+}
+
+.car-option-heading {
+  display: block;
+
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.car-option-selected {
+  display: block;
+
+  color: #d5dce3;
+  font-size: 11px;
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.car-option-arrow {
+  flex: 0 0 auto;
+
+  color: #d5dce3;
+  font-size: 10px;
+
+  transition: transform 0.2s ease;
+}
+
+.car-option-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================
+   DROPDOWN LIST
+========================================= */
+
+.car-option-dropdown {
+  position: absolute;
+  z-index: 1000;
+
+  left: 0;
+  bottom: calc(100% + 7px);
+
+  width: 100%;
+  max-height: 230px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 5px;
+
+  border: 1px solid #626a74;
+  border-radius: 8px;
+
+  background: #252a31;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+
+  box-sizing: border-box;
+}
+
+
+/* Dropdown option */
+.car-dropdown-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 9px 10px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 12px;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+/* Existing dark grey hover effect */
+.car-dropdown-item:hover,
+.car-dropdown-item.selected {
+  background: #4a535e;
+}
+
+.option-check {
+  flex: 0 0 auto;
+
+  color: #aeb8c2;
+  font-weight: 700;
+}
+
+.car-dropdown-empty {
+  padding: 10px;
+
+  color: #c5cbd2;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   DROPDOWN SCROLLBAR
+========================================= */
+
+.car-option-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.car-option-dropdown::-webkit-scrollbar-track {
+  background: #252a31;
+  border-radius: 6px;
+}
+
+.car-option-dropdown::-webkit-scrollbar-thumb {
+  background: #626a74;
+  border-radius: 6px;
+}
+
+.car-option-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #aeb8c2;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .car-options-grid {
+    gap: 7px;
+  }
+
+  .car-option-trigger {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .car-option-heading {
+    font-size: 11px;
+  }
+
+  .car-option-selected {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .car-tool-layout {
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .car-tool-scene {
+    height: 65dvh;
+    min-height: 350px;
+    flex: 0 0 65dvh;
+  }
+
+  .car-custom-panel {
+    height: auto;
+    min-height: 150px;
+    flex: 0 0 auto;
+  }
+
+  .car-options-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .car-option-heading {
+    font-size: 12px;
+  }
+
+  .car-option-selected {
+    font-size: 11px;
+  }
+}
+
+
+
+
+/* =================================
+   3D METALLIC SILVER PART ICONS
+================================= */
+
+.car-option-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.car-option-icon-wrap {
+  width: 54px;
+  height: 48px;
+  flex: 0 0 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(
+    145deg,
+    #4c5662,
+    #303943 55%,
+    #202832
+  );
+  border: 1px solid rgba(220, 230, 240, 0.25);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+.car-part-icon {
+  width: 48px;
+  height: 42px;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.55));
+}
+
+.car-option-trigger-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.car-option-heading {
+  color: #f2f5f8;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+
+.car-option-selected {
+  color: #c4cdd6;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.car-option-arrow {
+  color: #d9e0e7;
+  font-size: 11px;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.car-option-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .car-option-icon-wrap {
+    width: 46px;
+    height: 43px;
+    flex-basis: 46px;
+  }
+
+  .car-part-icon {
+    width: 42px;
+    height: 38px;
+  }
 }
