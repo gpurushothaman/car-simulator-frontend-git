@@ -101,8 +101,8 @@ export default function CarEnvironment({ optionsData }) {
   }, []);
 
   return (
-    <div style={{ width: "100%", minHeight: "100vh", background: "#f8fafc" }}>
-      <div style={{ width: "100%", height: "70vh", minHeight: 450, position: "relative" }}>
+    <div style={{ width: "100%",height: "auto",minHeight: 0, background: "#f8fafc" }}>
+      <div style={{ width: "100%", height: "85vh", minHeight: 450, position: "relative" }}>
         <SceneAnimationProvider>
           <SceneVariantProvider>
             <Canvas
@@ -132,16 +132,16 @@ export default function CarEnvironment({ optionsData }) {
               <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
               <StudioEnvironment />              
               <CameraControls modelBounds={modelBounds} />
-              {/* <SceneAnimationControls /> */}
               <CustomizationUI />
+              {/* <SceneAnimationControls /> */}
             </Canvas>
           </SceneVariantProvider>
         </SceneAnimationProvider>
 
-        <ShadowColorPicker
+        {/* <ShadowColorPicker
           shadowColor={shadowColor}
           onShadowColorChange={handleShadowColorChange}
-        />
+        /> */}
       </div>
 
       <CarCustomization customization={customization} dispatch={dispatch} />
