@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 
 :root {
   --bg: #0b0c10;
@@ -725,9 +727,398 @@ h1 span {
 }
 
 
-/* ////////////////////////////////
+
+                                          /* THIYAGU header page */
+                                          /* =========================================
+   PREMIUM METALLIC SILVER THEME
+   COLORS / TYPOGRAPHY / EFFECTS ONLY
+   NO LAYOUT CHANGES
+========================================= */
+
+/* GLOBAL TYPOGRAPHY */
+
+body {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input {
+  font-family: inherit;
+}
+.site-header,
+.site-header * {
+  font-family: "Manrope", sans-serif !important;
+}
+/* HEADER */
+
+.site-header {
+  background: linear-gradient(
+    120deg,
+    #e9edf1,
+    #c5ced7 48%,
+    #aebbc7
+  );
+
+  border-bottom: 1px solid #8e9ba8;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+}
+
+.site-nav {
+  color: #303b46;
+  font-weight: 700;
+}
+
+.site-nav a {
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: #657e94;
+}
+
+.header-cta {
+  color: #26323d;
+  border-color: #8495a5;
+
+  background: linear-gradient(
+    145deg,
+    #f8fafc,
+    #c3ced8
+  );
+
+  transition: all 0.25s ease;
+}
+
+.header-cta:hover {
+  color: #17212b;
+  border-color: #62788c;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #aebdca
+  );
+
+  box-shadow: 0 3px 10px rgba(40, 55, 70, 0.2);
+}
+
+.header-cta span {
+  color: #526b80;
+}
+
+/* HERO SECTION */
+
+.eyebrow {
+  color: #aebfd0;
+}
+
+.status-dot {
+  background: #aebfd0;
+  box-shadow: 0 0 13px rgba(174, 191, 208, 0.65);
+}
+
+h1 span {
+  color: #b8c9d8;
+}
+
+.hero-description,
+.page-lead {
+  color: #b0bbc6;
+}
+
+/* BUTTONS */
+
+.button {
+  border-color: rgba(180, 198, 215, 0.3);
+  transition: all 0.25s ease;
+}
+
+.button-primary {
+  color: #18232d;
+
+  background: linear-gradient(
+    135deg,
+    #edf2f6,
+    #aabac8
+  );
+
+  border-color: #b9c7d3;
+}
+
+.button-primary:hover {
+  color: #111820;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #c4d1dc
+  );
+
+  box-shadow: 0 4px 15px rgba(174, 195, 215, 0.2);
+}
+
+.button-secondary {
+  color: #dce4eb;
+  background: rgba(180, 195, 210, 0.04);
+}
+
+.button-secondary:hover {
+  color: #ffffff;
+  border-color: #a9bfd1;
+  background: rgba(169, 191, 209, 0.1);
+}
+
+/* HERO VISUAL */
+
+.hero-visual {
+  border-color: #526171;
+
+  background: radial-gradient(
+    ellipse at 50% 46%,
+    #566777 0,
+    #293642 35%,
+    #151c24 75%
+  );
+}
+
+.visual-glow {
+  background: rgba(190, 210, 228, 0.13);
+}
+
+.visual-orbit {
+  border-color: rgba(190, 210, 228, 0.55);
+}
+
+.orbit-two {
+  border-color: rgba(150, 175, 195, 0.45);
+}
+
+.visual-center {
+  color: #e0e8ef;
+}
+
+.visual-cross {
+  color: #d5e0e9;
+  text-shadow: 0 0 30px rgba(190, 210, 228, 0.65);
+}
+
+.visual-caption {
+  color: #d0d9e2;
+  background: rgba(15, 22, 29, 0.8);
+}
+
+/* SECTION HEADINGS */
+
+.section-heading h2 {
+  color: #e5ebf0;
+}
+
+.section-intro {
+  color: #aab5c0;
+}
+
+/* CARDS */
+
+.feature-card,
+.tool-card,
+.info-panel {
+  border-color: rgba(174, 193, 210, 0.2);
+
+  background: linear-gradient(
+    145deg,
+    #222d38,
+    #151c24 75%
+  );
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+  border-color: #9eafbf;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.feature-icon {
+  color: #d5e0e9;
+
+  background: linear-gradient(
+    145deg,
+    #536474,
+    #283642
+  );
+
+  border-color: #8497a9;
+}
+
+.card-index {
+  color: #9baab8;
+}
+
+.feature-card h3,
+.info-panel h2,
+.tool-card h2 {
+  color: #e5ebf0;
+}
+
+.feature-card p,
+.tool-card p,
+.info-panel p {
+  color: #aeb9c4;
+}
+
+.card-link {
+  color: #b8cad9;
+  transition: color 0.2s ease;
+}
+
+.card-link:hover {
+  color: #ffffff;
+}
+
+/* ABOUT SECTION */
+
+.panel-number {
+  color: #b9cbd9;
+}
+
+/* TOOL TAG */
+
+.tool-tag {
+  color: #aab8c5;
+}
+
+/* COLOR PREVIEW */
+
+.color-preview {
+  border-color: rgba(190, 205, 220, 0.3);
+}
+
+/* COLOR CONTROLS */
+
+.color-controls label,
+.range-label {
+  color: #b3bec9;
+}
+
+.color-controls code {
+  color: #e0e8ef;
+}
+
+.color-controls input {
+  accent-color: #a9bfd1;
+}
+
+.range-label strong {
+  color: #c3d1dd;
+}
+
+.range-input {
+  accent-color: #a9bfd1;
+}
+
+/* EXPOSURE PREVIEW */
+
+.exposure-preview {
+  background: linear-gradient(
+    135deg,
+    #354656,
+    #bdcbd7 48%,
+    #465665
+  );
+
+  color: #1b2731;
+}
+
+.preview-sun {
+  background: #f5f7f9;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.75);
+}
+
+.preview-sphere {
+  background: radial-gradient(
+    circle at 30% 25%,
+    #ffffff,
+    #b6c2cd 35%,
+    #465665 78%
+  );
+}
+
+/* FOOTER */
+
+.site-footer {
+  color: #303b46;
+
+  background: linear-gradient(
+    120deg,
+    #e5e9ed,
+    #c4cdd6 50%,
+    #aebbc7
+  );
+
+  border-top: 1px solid #8999a8;
+}
+
+/* CONTENT SECTION */
+
+.feature-section {
+  border-top-color: rgba(180, 195, 210, 0.2);
+}
+
+/* SCENE PAGE */
+
+.scene-page {
+  background: #171e26;
+}
+
+.loading {
+  color: #e6edf3;
+  background: #171e26;
+}
+
+/* SELECTION */
+
+::selection {
+  color: #17212b;
+  background: #b9cad8;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171e26;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #d5dfe8,
+    #788b9d,
+    #aebdca
+  );
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #dce5ed;
+}
+
+                                     /* ////////////////////////////////
                                     THIYAGUU - LEFT SIDE CAR MATERIAS UI          <<<<-----------------------
-                                ///////////////////////////////// */
+                                   ///////////////////////////////// */
 
 
 
@@ -1310,7 +1701,7 @@ h1 span {
   --car-text: #50545c;
 
   width: 100%;
-  min-height: 100vh;
+  min-height: 70vh;
   overflow: hidden;
 
   color: var(--car-dark);
@@ -1333,7 +1724,7 @@ h1 span {
 
   overflow: hidden;
   isolation: isolate;
-  background: #ffffff;
+  background: #e5e8eb;
   border: none;
   box-shadow: none;
 }
@@ -1469,8 +1860,15 @@ h1 span {
 
   border-radius: 50px;
 
-  color: #fff;
-  background: var(--car-dark);
+  color: #5f5f5f;
+  background: linear-gradient(
+  135deg,
+  
+  #949ca2 6%,
+  #ced2d6 48%,
+  #747a80 85%,
+  #77797a 70%
+);
 
   font-size: 17px;
   font-weight: 700;
@@ -1595,7 +1993,9 @@ h1 span {
 
 }
 
-/* //////////////////////////////////////////////
+
+
+                                      /* //////////////////////////////////////////////
                                             THIYAGU - TOOL PAGE (CUSTOMIZATION PAGE)
                                                 PREMIUM SILVER CAR CUSTOMIZATION
                                        ///////////////////////////////////////////////  */
@@ -2094,40 +2494,180 @@ h1 span {
 }
 
 
-/*--------------loader-------------------------*/
+
+/* =========================================
+   PREMIUM CAR LOADING SCREEN
+========================================= */
+
 .car-loading-overlay {
   position: absolute;
   inset: 0;
   z-index: 1000;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #eeeeee;
-  color: #222;
+
+  overflow: hidden;
+
+  font-family: "Manrope", sans-serif;
+  color: #303943;
+
+  /* Premium metallic silver background */
+  background:
+    radial-gradient(
+      ellipse at 50% 35%,
+      #ffffff 0%,
+      #e8edf2 38%,
+      transparent 75%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #cbd2da 25%,
+      #eef1f4 50%,
+      #aeb8c3 75%,
+      #e8edf2 100%
+    );
 }
+
+/* Soft metallic showroom glow */
+.car-loading-overlay::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.7);
+  filter: blur(100px);
+
+  animation: showroom-glow 3s ease-in-out infinite alternate;
+}
+/* Subtle showroom light */
+
+.car-loading-overlay::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+
+  background: rgba(116, 160, 205, 0.10);
+  filter: blur(90px);
+
+  animation: showroom-glow 3s ease-in-out infinite alternate;
+}
+
+/* Loading ring */
 
 .loader-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid #d1d5db;
-  border-top-color: #222;
+  position: relative;
+  z-index: 1;
+
+  width: 68px;
+  height: 68px;
+
+  border: 3px solid rgba(255, 255, 255, 0.10);
+  border-top: 3px solid #a9c9e8;
+  border-right: 3px solid #647f9c;
+
   border-radius: 50%;
-  animation: loader-spin 0.8s linear infinite;
+
+  box-shadow:
+    0 0 20px rgba(126, 174, 220, 0.18),
+    inset 0 0 12px rgba(255, 255, 255, 0.04);
+
+  animation: loader-spin 1s linear infinite;
 }
+
+/* Inner ring */
+
+.loader-spinner::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom-color: #dce9f5;
+  border-radius: 50%;
+
+  animation: loader-spin 1.8s linear infinite reverse;
+}
+
+/* Main heading */
 
 .car-loading-overlay h3 {
-  margin-top: 18px;
-  font-size: 16px;
+  position: relative;
+  z-index: 1;
+
+  margin: 28px 0 7px;
+
+  color: #2f3132;
+
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
 }
 
+/* Subtitle */
+
 .car-loading-overlay p {
-  font-size: 13px;
-  color: #777;
+  position: relative;
+  z-index: 1;
+
+  margin: 0;
+
+  color: #9eacbb;
+
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
 }
+
+/* Small accent line */
+
+.car-loading-overlay p::before {
+  content: "";
+  display: inline-block;
+
+  width: 22px;
+  height: 2px;
+
+  margin: 0 9px 3px 0;
+
+  background: #8eb9e2;
+  box-shadow: 0 0 8px rgba(142, 185, 226, 0.6);
+}
+
+/* Animations */
 
 @keyframes loader-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes showroom-glow {
+  from {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+
+  to {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Reduced motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-spinner,
+  .loader-spinner::after,
+  .car-loading-overlay::before {
+    animation: none;
   }
 }

@@ -214,8 +214,8 @@ export default function CarEnvironment({ optionsData }) {
         {isLoading && (
           <div className="car-loading-overlay">
             <div className="loader-spinner" />
-            <h3>Loading your car...</h3>
-            <p>Please wait</p>
+            <h3>Preparing Your Car</h3>
+            <p>LOADING 3D EXPERIENCE</p>
           </div>
         )}
       </div>

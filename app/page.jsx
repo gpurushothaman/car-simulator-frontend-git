@@ -8,7 +8,13 @@ export default function Home() {
       <section className="car-home-hero">
         {/* MAIN BACKGROUND CAR IMAGE */}
         <div className="car-home-hero-bg">
-          <Image src="/caroriginal.png" alt="Main Silver Luxury Car" />
+          <Image src="/caroriginal.png" alt="Main Silver Luxury Car" width={1200}
+          height={800}
+          style={{
+            width: "73%",
+            height: "auto",
+            objectFit: "contain",
+          }}/>
         </div>
 
         <div className="car-home-hero-content">

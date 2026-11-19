@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
         <header className="site-header">
           <Link className="site-brand" href="/">
             <Image
-              src="/Dsimilar.png"
+              src="/effelogo.png"
               alt="Company Logo"
               className="site-logo"
               width={500}
@@ -38,8 +38,8 @@ export default function RootLayout({ children }) {
         </header>
         {children}
         <footer className="site-footer">
-          <span>Live Envmaps Studio</span>
-          <span>Built for exploring 3D environments</span>
+          <span>EFFE animation studio</span>
+          <span>Built For Exploring 3D Car Environments</span>
         </footer>
       </body>
     </html>
