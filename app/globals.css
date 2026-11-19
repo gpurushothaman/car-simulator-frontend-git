@@ -1573,10 +1573,9 @@ h1 span {
 /* =========================================
    BOTTOM CUSTOMIZATION PANEL
 ========================================= */
-
 .car-custom-panel {
   position: relative;
-  z-index: 20;
+  z-index: 9999 !important;
 
   width: 100%;
   height: var(--panel-height);
@@ -1848,7 +1847,7 @@ h1 span {
 
 .car-option-dropdown {
   position: absolute;
-  z-index: 1000;
+  z-index: 10000!important;
 
   left: 0;
   bottom: calc(100% + 7px);
