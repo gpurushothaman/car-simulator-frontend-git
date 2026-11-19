@@ -1,9 +1,8 @@
 "use client";
 
 import * as THREE from "three";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-
 import CarModel from "./CarModel";
 import StudioLighting from "./StudioLighting";
 import StudioEnvironment from "./StudioEnvironment";
@@ -29,6 +28,18 @@ import {
   INITIAL_CAR_CUSTOMIZATION_STATE,
 } from "@/components/redux/carCustomization";
 import { setInitialCustomization } from "@/components/redux/carCustomization/actions";
+
+function SceneLoadingFallback({ onLoadingChange }) {
+  useEffect(() => {
+    onLoadingChange(true);
+
+    return () => {
+      onLoadingChange(false);
+    };
+  }, [onLoadingChange]);
+
+  return null;
+}
 
 function getDefaultValue(options, fallback) {
   if (!Array.isArray(options) || options.length === 0) return fallback;
@@ -62,6 +73,10 @@ export default function CarEnvironment({ optionsData }) {
   const [shadowColor, setShadowColor] = useState(DEFAULT_SHADOW_COLOR);
   const initializedOptionsKeyRef = useRef(null);
   const optionsDataKey = getOptionsDataKey(optionsData);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+ 
 
   useEffect(() => {
     if (!optionsData) return;
@@ -100,6 +115,10 @@ export default function CarEnvironment({ optionsData }) {
     setShadowColor(color);
   }, []);
 
+
+  const handleLoadingChange = useCallback((loading) => {
+    setIsLoading(loading);
+  }, []);
   return (
     <div style={{ width: "100%",height: "auto",minHeight: 0, background: "#f8fafc" }}>
       <div style={{ width: "100%", height: "85vh", minHeight: 450, position: "relative" }}>
@@ -124,16 +143,25 @@ export default function CarEnvironment({ optionsData }) {
                 scene.background = new THREE.Color("#eeeeee");
               }}
             >
+              <Suspense fallback={ <SceneLoadingFallback
+            onLoadingChange={handleLoadingChange}
+          />}>
+              <StudioEnvironment /> 
               <StudioLighting />
+              <CameraControls modelBounds={modelBounds} />
+
               <CarModel
                 onBoundsCalculated={handleBoundsCalculated}
                 customization={customization}
               />
+              
               <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
-              <StudioEnvironment />              
-              <CameraControls modelBounds={modelBounds} />
+                         
+         
               <CustomizationUI />
+              </Suspense>
               {/* <SceneAnimationControls /> */}
+              
             </Canvas>
           </SceneVariantProvider>
         </SceneAnimationProvider>
@@ -142,6 +170,16 @@ export default function CarEnvironment({ optionsData }) {
           shadowColor={shadowColor}
           onShadowColorChange={handleShadowColorChange}
         /> */}
+
+
+
+{isLoading && (
+  <div className="car-loading-overlay">
+    <div className="loader-spinner" />
+    <h3>Loading your car...</h3>
+    <p>Please wait</p>
+  </div>
+)}
       </div>
 
       <CarCustomization customization={customization} dispatch={dispatch} />
