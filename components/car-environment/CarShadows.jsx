@@ -15,7 +15,7 @@ export default function CarShadows({ modelBounds, shadowColor }) {
       ]}
       scale={modelBounds.shadowSize}
       frames={60}
-      alphaTest={1}
+      alphaTest={0.1}
       opacity={0.65}
       color={shadowColor}
     >

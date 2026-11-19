@@ -1,26 +1,18 @@
-
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="car-home">
-
       {/* HERO SECTION */}
       <section className="car-home-hero">
-
         {/* MAIN BACKGROUND CAR IMAGE */}
         <div className="car-home-hero-bg">
-          <img
-            src="/caroriginal.png"
-            alt="Main Silver Luxury Car"
-          />
+          <Image src="/caroriginal.png" alt="Main Silver Luxury Car" />
         </div>
 
         <div className="car-home-hero-content">
-
-          <span className="car-home-eyebrow">
-            PREMIUM CAR CUSTOMIZATION
-          </span>
+          <span className="car-home-eyebrow">PREMIUM CAR CUSTOMIZATION</span>
 
           <h1>
             Build Your
@@ -29,16 +21,12 @@ export default function Home() {
 
           <div className="car-home-line"></div>
 
-          <p>
-            Customize every detail and create a car
-            that's truly yours.
-          </p>
+          <p>Customize every detail and create a car that &apos; s truly yours.</p>
 
           <Link href="/scene" className="car-home-button">
             Customize Your Car
             <span>→</span>
           </Link>
-
         </div>
 
         <div className="car-home-hero-bottom">
@@ -46,9 +34,7 @@ export default function Home() {
           <span className="car-home-bottom-line"></span>
           <span>PREMIUM COLLECTION</span>
         </div>
-
       </section>
-
 
       {/* CUSTOMIZE BANNER */}
       {/* <section className="car-home-customize">
@@ -73,7 +59,6 @@ export default function Home() {
         </Link>
 
       </section> */}
-
     </main>
   );
 }

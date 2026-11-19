@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 
 export const metadata = {
@@ -12,10 +13,18 @@ export default function RootLayout({ children }) {
       <body>
         <header className="site-header">
           <Link className="site-brand" href="/">
-            <img
+            <Image
               src="/Dsimilar.png"
               alt="Company Logo"
               className="site-logo"
+              width={500}
+              height={300}
+              style={{
+                display: "block",
+                width: "150px",
+                height: "65px",
+                objectFit: "contain",
+              }}
             />
           </Link>
           <nav className="site-nav" aria-label="Main navigation">
@@ -23,7 +32,9 @@ export default function RootLayout({ children }) {
             <Link href="/about">About</Link>
             <Link href="/tools">Tools</Link>
           </nav>
-          <Link className="header-cta" href="/scene">Open 3D scene <span aria-hidden="true">↗</span></Link>
+          <Link className="header-cta" href="/scene">
+            Open 3D scene <span aria-hidden="true">↗</span>
+          </Link>
         </header>
         {children}
         <footer className="site-footer">
