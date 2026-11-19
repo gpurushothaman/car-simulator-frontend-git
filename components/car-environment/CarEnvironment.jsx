@@ -1,9 +1,15 @@
 "use client";
 
 import * as THREE from "three";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  Suspense,
+} from "react";
 import { Canvas } from "@react-three/fiber";
-
 import CarModel from "./CarModel";
 import StudioLighting from "./StudioLighting";
 import StudioEnvironment from "./StudioEnvironment";
@@ -11,9 +17,7 @@ import CarShadows from "./CarShadows";
 import CameraControls from "./CameraControls";
 import ShadowColorPicker from "./ShadowColorPicker";
 import CarCustomization from "./CarCustomization";
-import {
-  SceneAnimationProvider,
-} from "./SceneAnimationContext";
+import { SceneAnimationProvider } from "./SceneAnimationContext";
 import SceneAnimationControls from "./SceneAnimationControls";
 import { SceneVariantProvider } from "./SceneVariantContext";
 import CustomizationUI from "./CustomizationUI";
@@ -29,6 +33,18 @@ import {
   INITIAL_CAR_CUSTOMIZATION_STATE,
 } from "@/components/redux/carCustomization";
 import { setInitialCustomization } from "@/components/redux/carCustomization/actions";
+
+function SceneLoadingFallback({ onLoadingChange }) {
+  useEffect(() => {
+    onLoadingChange(true);
+
+    return () => {
+      onLoadingChange(false);
+    };
+  }, [onLoadingChange]);
+
+  return null;
+}
 
 function getDefaultValue(options, fallback) {
   if (!Array.isArray(options) || options.length === 0) return fallback;
@@ -63,6 +79,8 @@ export default function CarEnvironment({ optionsData }) {
   const initializedOptionsKeyRef = useRef(null);
   const optionsDataKey = getOptionsDataKey(optionsData);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (!optionsData) return;
     if (initializedOptionsKeyRef.current === optionsDataKey) return;
@@ -70,11 +88,26 @@ export default function CarEnvironment({ optionsData }) {
 
     dispatch(
       setInitialCustomization({
-        tyre: getDefaultValue(optionsData.tyres, INITIAL_CAR_CUSTOMIZATION_STATE.tyre),
-        steering: getDefaultValue(optionsData.steering, INITIAL_CAR_CUSTOMIZATION_STATE.steering),
-        spoiler: getDefaultValue(optionsData.spoiler, INITIAL_CAR_CUSTOMIZATION_STATE.spoiler),
-        rearBumper: getDefaultValue(optionsData.rearbumper, INITIAL_CAR_CUSTOMIZATION_STATE.rearBumper),
-        frontBumper: getDefaultValue(optionsData.frontbumper, INITIAL_CAR_CUSTOMIZATION_STATE.frontBumper),
+        tyre: getDefaultValue(
+          optionsData.tyres,
+          INITIAL_CAR_CUSTOMIZATION_STATE.tyre
+        ),
+        steering: getDefaultValue(
+          optionsData.steering,
+          INITIAL_CAR_CUSTOMIZATION_STATE.steering
+        ),
+        spoiler: getDefaultValue(
+          optionsData.spoiler,
+          INITIAL_CAR_CUSTOMIZATION_STATE.spoiler
+        ),
+        rearBumper: getDefaultValue(
+          optionsData.rearbumper,
+          INITIAL_CAR_CUSTOMIZATION_STATE.rearBumper
+        ),
+        frontBumper: getDefaultValue(
+          optionsData.frontbumper,
+          INITIAL_CAR_CUSTOMIZATION_STATE.frontBumper
+        ),
         customizationData: optionsData,
       })
     );
@@ -100,14 +133,37 @@ export default function CarEnvironment({ optionsData }) {
     setShadowColor(color);
   }, []);
 
+  const handleLoadingChange = useCallback((loading) => {
+    setIsLoading(loading);
+  }, []);
   return (
-    <div style={{ width: "100%",height: "auto",minHeight: 0, background: "#f8fafc" }}>
-      <div style={{ width: "100%", height: "85vh", minHeight: 450, position: "relative" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "auto",
+        minHeight: 0,
+        background: "#f8fafc",
+        userSelect: "none",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "85vh",
+          minHeight: 450,
+          position: "relative",
+          userSelect: "none",
+        }}
+      >
         <SceneAnimationProvider>
           <SceneVariantProvider>
             <Canvas
               shadows
               camera={CAMERA_CONFIG}
+              onContextMenu={(e) => e.preventDefault()}
+              onPointerDown={(e) => {
+                if (e.button === 2) e.preventDefault();
+              }}
               dpr={[1, 2]}
               gl={{
                 antialias: true,
@@ -124,15 +180,27 @@ export default function CarEnvironment({ optionsData }) {
                 scene.background = new THREE.Color("#eeeeee");
               }}
             >
-              <StudioLighting />
-              <CarModel
-                onBoundsCalculated={handleBoundsCalculated}
-                customization={customization}
-              />
-              <CarShadows modelBounds={modelBounds} shadowColor={shadowColor} />
-              <StudioEnvironment />              
-              <CameraControls modelBounds={modelBounds} />
-              <CustomizationUI />
+              <Suspense
+                fallback={
+                  <SceneLoadingFallback onLoadingChange={handleLoadingChange} />
+                }
+              >
+                <StudioEnvironment />
+                <StudioLighting />
+                <CameraControls modelBounds={modelBounds} />
+
+                <CarModel
+                  onBoundsCalculated={handleBoundsCalculated}
+                  customization={customization}
+                />
+
+                <CarShadows
+                  modelBounds={modelBounds}
+                  shadowColor={shadowColor}
+                />
+
+                <CustomizationUI />
+              </Suspense>
               {/* <SceneAnimationControls /> */}
             </Canvas>
           </SceneVariantProvider>
@@ -142,6 +210,14 @@ export default function CarEnvironment({ optionsData }) {
           shadowColor={shadowColor}
           onShadowColorChange={handleShadowColorChange}
         /> */}
+
+        {isLoading && (
+          <div className="car-loading-overlay">
+            <div className="loader-spinner" />
+            <h3>Loading your car...</h3>
+            <p>Please wait</p>
+          </div>
+        )}
       </div>
 
       <CarCustomization customization={customization} dispatch={dispatch} />
