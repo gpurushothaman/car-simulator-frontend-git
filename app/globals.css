@@ -11,13 +11,16 @@
   --line: rgba(255, 255, 255, 0.11);
   --accent: #c5f467;
 }
+
 * {
   box-sizing: border-box;
 }
+
 html {
   min-height: 100%;
   scroll-behavior: smooth;
 }
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -25,14 +28,17 @@ body {
   color: var(--text);
   font-family: "Manrope", Arial, sans-serif;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 button,
 input {
   font: inherit;
 }
+
 .site-header {
   min-height: 78px;
   padding: 0 6.5%;
@@ -45,28 +51,32 @@ input {
   position: relative;
   z-index: 20;
 }
+
 .site-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .site-logo {
-    display: block;
-    width: 150px;
-    height: 65px;
-    object-fit: contain;
+  display: block;
+  width: 150px;
+  height: 65px;
+  object-fit: contain;
 }
+
 .site-nav {
   display: flex;
   gap: clamp(18px, 3vw, 42px);
   color: #000000;
   font-size: 13px;
 }
+
 .site-nav a:hover,
 .site-nav a:focus-visible {
   color: var(--accent);
 }
+
 .header-cta {
   border: 0.7px solid beige;
   border-radius: 5px;
@@ -75,14 +85,17 @@ input {
   font-weight: 700;
   color: #000000;
 }
+
 .header-cta span {
   color: var(--accent);
   margin-left: 8px;
 }
+
 .section-wrap {
   width: min(1120px, 87%);
   margin: 0 auto;
 }
+
 .hero {
   min-height: 570px;
   display: grid;
@@ -92,12 +105,14 @@ input {
   padding-top: 72px;
   padding-bottom: 76px;
 }
+
 .eyebrow {
   color: var(--accent);
   font: 11px "DM Mono", monospace;
   letter-spacing: 0.12em;
   margin: 0 0 24px;
 }
+
 .status-dot {
   display: inline-block;
   width: 7px;
@@ -107,6 +122,7 @@ input {
   margin-right: 9px;
   box-shadow: 0 0 13px #c5f4678c;
 }
+
 h1 {
   font-size: clamp(42px, 5.7vw, 70px);
   letter-spacing: -0.075em;
@@ -114,9 +130,11 @@ h1 {
   margin: 0;
   max-width: 650px;
 }
+
 h1 span {
   color: var(--accent);
 }
+
 .hero-description,
 .page-lead {
   color: var(--muted);
@@ -125,11 +143,13 @@ h1 span {
   max-width: 490px;
   margin: 24px 0 28px;
 }
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -143,21 +163,26 @@ h1 span {
   cursor: pointer;
   border: 1px solid var(--line);
 }
+
 .button-primary {
   color: #11150b;
   background: var(--accent);
   border-color: var(--accent);
 }
+
 .button-primary:hover {
   background: #d5ff88;
 }
+
 .button-secondary {
   color: var(--text);
   background: transparent;
 }
+
 .button-secondary:hover {
   border-color: var(--accent);
 }
+
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
@@ -167,20 +192,20 @@ h1 span {
   font: 9px "DM Mono", monospace;
   letter-spacing: 0.06em;
 }
+
 .hero-visual {
   position: relative;
   min-height: 365px;
   overflow: hidden;
   border: 1px solid #292d38;
   border-radius: 7px;
-  background: radial-gradient(
-    ellipse at 50% 46%,
-    #343e4c 0,
-    #191e28 33%,
-    #101218 68%
-  );
+  background: radial-gradient(ellipse at 50% 46%,
+      #343e4c 0,
+      #191e28 33%,
+      #101218 68%);
   isolation: isolate;
 }
+
 .visual-grid {
   position: absolute;
   inset: 0;
@@ -191,6 +216,7 @@ h1 span {
   transform: perspective(360px) rotateX(58deg) scale(1.5);
   transform-origin: center 75%;
 }
+
 .visual-glow {
   position: absolute;
   width: 230px;
@@ -201,6 +227,7 @@ h1 span {
   background: #c5f46717;
   filter: blur(25px);
 }
+
 .visual-orbit {
   position: absolute;
   left: 50%;
@@ -209,16 +236,19 @@ h1 span {
   border-radius: 50%;
   transform: translate(-50%, -50%) rotate(-25deg);
 }
+
 .orbit-one {
   width: 240px;
   height: 100px;
 }
+
 .orbit-two {
   width: 185px;
   height: 275px;
   transform: translate(-50%, -50%) rotate(58deg);
   border-color: #a7b5cb61;
 }
+
 .visual-center {
   position: absolute;
   left: 50%;
@@ -232,11 +262,13 @@ h1 span {
   color: #d5e6b5;
   letter-spacing: 0.1em;
 }
+
 .visual-cross {
   font-size: 65px;
   color: var(--accent);
   text-shadow: 0 0 36px #c5f46790;
 }
+
 .visual-caption {
   position: absolute;
   bottom: 0;
@@ -251,10 +283,12 @@ h1 span {
   font: 9px "DM Mono", monospace;
   letter-spacing: 0.08em;
 }
+
 .feature-section {
   padding: 50px 0 100px;
   border-top: 1px solid var(--line);
 }
+
 .section-heading {
   display: flex;
   align-items: end;
@@ -262,14 +296,17 @@ h1 span {
   gap: 30px;
   margin-bottom: 30px;
 }
+
 .section-heading .eyebrow {
   margin-bottom: 12px;
 }
+
 .section-heading h2 {
   font-size: clamp(25px, 3vw, 35px);
   letter-spacing: -0.06em;
   margin: 0;
 }
+
 .section-intro {
   max-width: 310px;
   color: var(--muted);
@@ -277,11 +314,13 @@ h1 span {
   line-height: 1.8;
   margin: 0 0 3px;
 }
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
+
 .feature-card,
 .tool-card,
 .info-panel {
@@ -289,16 +328,19 @@ h1 span {
   border-radius: 6px;
   background: linear-gradient(145deg, #151820, #101116);
 }
+
 .feature-card {
   min-height: 235px;
   padding: 23px;
   position: relative;
   transition: border-color 0.2s, transform 0.2s;
 }
+
 .feature-card:hover {
   border-color: #c5f4677a;
   transform: translateY(-3px);
 }
+
 .card-index {
   position: absolute;
   right: 22px;
@@ -306,6 +348,7 @@ h1 span {
   color: #666b75;
   font: 10px "DM Mono", monospace;
 }
+
 .feature-icon {
   width: 38px;
   height: 38px;
@@ -317,10 +360,12 @@ h1 span {
   border-radius: 5px;
   font-size: 20px;
 }
+
 .feature-card h3 {
   margin: 26px 0 10px;
   font-size: 16px;
 }
+
 .feature-card p,
 .tool-card p,
 .info-panel p {
@@ -328,6 +373,7 @@ h1 span {
   font-size: 12px;
   line-height: 1.8;
 }
+
 .card-link {
   display: inline-block;
   margin-top: 12px;
@@ -335,81 +381,98 @@ h1 span {
   font-size: 11px;
   font-weight: 800;
 }
+
 .content-page {
   padding-top: 78px;
   padding-bottom: 100px;
   min-height: 70vh;
 }
+
 .content-page h1 {
   max-width: 780px;
 }
+
 .content-page .page-lead {
   max-width: 700px;
   margin-bottom: 48px;
 }
+
 .about-panels {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-bottom: 32px;
 }
+
 .info-panel {
   padding: 25px;
   min-height: 215px;
 }
+
 .panel-number {
   color: var(--accent);
   font: 11px "DM Mono", monospace;
 }
+
 .info-panel h2 {
   font-size: 17px;
   margin: 28px 0 10px;
   letter-spacing: -0.04em;
 }
+
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
+
 .tool-card {
   padding: 25px;
 }
+
 .tool-card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .tool-tag {
   font: 9px "DM Mono", monospace;
   color: #858a95;
   letter-spacing: 0.1em;
 }
+
 .tool-card h2 {
   font-size: 20px;
   letter-spacing: -0.05em;
   margin: 24px 0 7px;
 }
+
 .tool-card p {
   max-width: 450px;
   min-height: 43px;
 }
+
 .color-preview {
   height: 80px;
   border-radius: 4px;
   margin: 20px 0;
   border: 1px solid #ffffff1f;
 }
+
 .color-controls {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
+
 .color-controls label,
 .range-label {
   font-size: 11px;
   color: var(--muted);
 }
+
 .color-controls input {
   width: 35px;
   height: 30px;
@@ -418,14 +481,17 @@ h1 span {
   background: transparent;
   cursor: pointer;
 }
+
 .color-controls code {
   margin-left: auto;
   color: var(--text);
   font: 12px "DM Mono", monospace;
 }
+
 .tool-button {
   width: 100%;
 }
+
 .exposure-preview {
   height: 145px;
   position: relative;
@@ -440,6 +506,7 @@ h1 span {
   color: #11151b;
   font: 9px "DM Mono", monospace;
 }
+
 .preview-sun {
   position: absolute;
   top: 18px;
@@ -450,6 +517,7 @@ h1 span {
   background: #f4f0d6;
   box-shadow: 0 0 35px #fff4c6;
 }
+
 .preview-sphere {
   position: absolute;
   width: 82px;
@@ -457,50 +525,58 @@ h1 span {
   top: 35px;
   left: calc(50% - 41px);
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 30% 25%,
-    #f5f5f5,
-    #929eac 35%,
-    #394453 78%
-  );
+  background: radial-gradient(circle at 30% 25%,
+      #f5f5f5,
+      #929eac 35%,
+      #394453 78%);
   box-shadow: 15px 18px 22px #10151c70;
 }
+
 .exposure-preview span {
   position: relative;
   z-index: 1;
 }
+
 .range-label {
   display: flex;
   justify-content: space-between;
 }
+
 .range-label strong {
   color: var(--accent);
   font: 12px "DM Mono", monospace;
 }
+
 .range-input {
   width: 100%;
   accent-color: var(--accent);
   margin-top: 15px;
 }
+
 .tool-card-wide {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 25px;
 }
+
 .tool-card-wide .tool-card-top {
   flex: 0 0 auto;
 }
+
 .tool-card-wide h2 {
   margin-top: 0;
 }
+
 .tool-card-wide p {
   margin-bottom: 0;
 }
+
 .tool-card-wide .button {
   margin-left: auto;
   white-space: nowrap;
 }
+
 .site-footer {
   border-top: 1px solid var(--line);
   padding: 24px 6.5%;
@@ -508,9 +584,11 @@ h1 span {
   justify-content: space-between;
   gap: 15px;
   color: #000000;
-  background: rgba(206, 206, 206, 0.94); ;
+  background: rgba(206, 206, 206, 0.94);
+  ;
   font: 10px "DM Mono", monospace;
 }
+
 /* Original 3D scene route */
 .scene-page {
   position: relative;
@@ -519,6 +597,7 @@ h1 span {
   overflow: hidden;
   background: #000;
 }
+
 .scene-page canvas {
   width: 100%;
   height: 100%;
@@ -526,11 +605,13 @@ h1 span {
   touch-action: none;
   animation: fade-in 2s ease 0.2s forwards;
 }
+
 .overlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
+
 .brand-link {
   position: absolute;
   bottom: 30px;
@@ -538,18 +619,21 @@ h1 span {
   font-size: 12px;
   pointer-events: auto;
 }
+
 .top-label {
   position: absolute;
   top: 25px;
   left: 25px;
   font-size: 12px;
 }
+
 .date-label {
   position: absolute;
   bottom: 30px;
   right: 25px;
   font-size: 12px;
 }
+
 .loading {
   position: absolute;
   inset: 0;
@@ -558,66 +642,82 @@ h1 span {
   color: white;
   background: black;
 }
+
 @keyframes fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 @media (max-width: 760px) {
   .site-header {
     padding: 16px 5%;
     flex-wrap: wrap;
   }
+
   .site-nav {
     order: 3;
     width: 100%;
     justify-content: center;
     padding-top: 10px;
   }
+
   .header-cta {
     font-size: 10px;
   }
+
   .section-wrap {
     width: 90%;
   }
+
   .hero {
     grid-template-columns: 1fr;
     padding-top: 55px;
     gap: 35px;
   }
+
   .hero-visual {
     min-height: 300px;
   }
+
   .hero-meta {
     margin-top: 35px;
   }
+
   .section-heading {
     align-items: start;
     flex-direction: column;
     gap: 12px;
   }
+
   .feature-grid,
   .about-panels,
   .tools-grid {
     grid-template-columns: 1fr;
   }
+
   .tool-card-wide {
     grid-column: auto;
     align-items: flex-start;
     flex-direction: column;
   }
+
   .tool-card-wide .button {
     margin-left: 0;
   }
+
   .content-page {
     padding-top: 55px;
   }
+
   .site-footer {
     flex-direction: column;
   }
+
   .scene-page {
     min-height: calc(100vh - 150px);
     height: calc(100vh - 150px);
@@ -625,11 +725,11 @@ h1 span {
 }
 
 
-                                /* ////////////////////////////////
+/* ////////////////////////////////
                                     THIYAGUU - LEFT SIDE CAR MATERIAS UI          <<<<-----------------------
                                 ///////////////////////////////// */
 
-                                
+
 
 /* =====================================
    MATERIAL PANEL + ARROW CONTAINER
@@ -664,12 +764,10 @@ h1 span {
 
   color: #39434d;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #c5cdd5 50%,
-    #eef1f4
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #c5cdd5 50%,
+      #eef1f4);
 
   border: 1px solid #9da9b4;
   border-radius: 6px;
@@ -691,11 +789,9 @@ h1 span {
 }
 
 .animation-panel-toggle:hover {
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #d4dce3
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #d4dce3);
 
   border-color: #758491;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
@@ -715,11 +811,9 @@ h1 span {
 
   color: #343b42;
 
-  background: linear-gradient(
-    145deg,
-    rgba(250, 251, 252, 0.97),
-    rgba(205, 212, 219, 0.96)
-  );
+  background: linear-gradient(145deg,
+      rgba(250, 251, 252, 0.97),
+      rgba(205, 212, 219, 0.96));
 
   border: 1px solid #aeb7c0;
   border-radius: 8px;
@@ -779,12 +873,10 @@ h1 span {
   font-weight: 600;
   text-align: left;
 
-  background: linear-gradient(
-    145deg,
-    #f9fafb 0%,
-    #dce1e6 45%,
-    #c0c8d0 100%
-  );
+  background: linear-gradient(145deg,
+      #f9fafb 0%,
+      #dce1e6 45%,
+      #c0c8d0 100%);
 
   border: 1px solid #aeb8c2;
   border-radius: 5px;
@@ -820,11 +912,9 @@ h1 span {
 .animation-material-button:hover {
   color: #202830;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #d2d9df
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #d2d9df);
 
   border-color: #8d9aa6;
 }
@@ -834,12 +924,10 @@ h1 span {
 .animation-material-button.active {
   color: #202830;
 
-  background: linear-gradient(
-    145deg,
-    #c2cbd3,
-    #edf0f3 50%,
-    #aeb9c3
-  );
+  background: linear-gradient(145deg,
+      #c2cbd3,
+      #edf0f3 50%,
+      #aeb9c3);
 
   border-color: #8795a1;
 }
@@ -904,8 +992,8 @@ h1 span {
 
 
 
-                                               
-                              /*   ///////////////////////////////////////
+
+/*   ///////////////////////////////////////
                                     THIYAGUU - RIGHT SIDE CAR MATERIAS UI                ------------------>>>>>
                                    ///////////////////////////////////////   */
 
@@ -947,12 +1035,10 @@ h1 span {
 
   color: #39434d;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #c5cdd5 50%,
-    #eef1f4
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #c5cdd5 50%,
+      #eef1f4);
 
   border: 1px solid #9da9b4;
   border-radius: 6px;
@@ -982,11 +1068,9 @@ h1 span {
   flex-direction: column;
   gap: 4px;
 
-  background: linear-gradient(
-    145deg,
-    rgba(250, 251, 252, 0.97),
-    rgba(205, 212, 219, 0.96)
-  );
+  background: linear-gradient(145deg,
+      rgba(250, 251, 252, 0.97),
+      rgba(205, 212, 219, 0.96));
 
   border: 1px solid #aeb7c0;
   border-radius: 8px;
@@ -1008,12 +1092,10 @@ h1 span {
   font-size: 10px;
   font-weight: 600;
 
-  background: linear-gradient(
-    145deg,
-    #f9fafb,
-    #dce1e6 50%,
-    #c0c8d0
-  );
+  background: linear-gradient(145deg,
+      #f9fafb,
+      #dce1e6 50%,
+      #c0c8d0);
 
   border: 1px solid #aeb8c2;
   border-radius: 5px;
@@ -1024,11 +1106,9 @@ h1 span {
 }
 
 .scene-controls-panel button:hover:not(:disabled) {
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #d2d9df
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #d2d9df);
 }
 
 .scene-controls-panel button:disabled {
@@ -1217,24 +1297,24 @@ h1 span {
 
 
 
-                                                  
-                                        /* =====================================================
+
+/* =====================================================
                                                    ABIMANYA CAR CUSTOMIZER - HOME PAGE
                                                        CLEAN SILVER / GREY THEME
                                                             Accent: #888987
                                           ===================================================== */
 
 .car-home {
-    --car-accent: #888987;
-    --car-dark: #191c22;
-    --car-text: #50545c;
+  --car-accent: #888987;
+  --car-dark: #191c22;
+  --car-text: #50545c;
 
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 
-    color: var(--car-dark);
-    background: #e5e8eb;
+  color: var(--car-dark);
+  background: #e5e8eb;
 }
 
 
@@ -1243,24 +1323,19 @@ h1 span {
 ===================================================== */
 
 .car-home-hero {
-    position: relative;
+  position: relative;
 
-    width: 100%;
-    min-height: 650px;
+  width: 100%;
+  min-height: 650px;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    overflow: hidden;
-    isolation: isolate;
-
-    /* ONE SMOOTH GREY BACKGROUND */
-   .car-home-hero {
+  overflow: hidden;
+  isolation: isolate;
   background: #ffffff;
-}
-
-    border: none;
-    box-shadow: none;
+  border: none;
+  box-shadow: none;
 }
 
 
@@ -1270,39 +1345,39 @@ h1 span {
 ===================================================== */
 
 .car-home-hero-bg {
-    position: absolute;
+  position: absolute;
 
-    inset: 0;
+  inset: 0;
 
-    width: 105%;
-    height: 100%;
+  width: 105%;
+  height: 100%;
 
-    overflow: hidden;
-    background: transparent;
+  overflow: hidden;
+  background: transparent;
 
-    z-index: 1;
+  z-index: 1;
 }
 
 .car-home-hero-bg img {
-    position: absolute;
+  position: absolute;
 
-    width: 75%;
-    height: 100%;
+  width: 75%;
+  height: 100%;
 
-    right: 0;
-    bottom: 0;
+  right: 0;
+  bottom: 0;
 
-    display: block;
+  display: block;
 
-    object-fit: contain;
-    object-position: right center;
+  object-fit: contain;
+  object-position: right center;
 
-    /* ORIGINAL IMAGE APPEARANCE */
-    opacity: 1;
-    filter: none;
-    box-shadow: none;
+  /* ORIGINAL IMAGE APPEARANCE */
+  opacity: 1;
+  filter: none;
+  box-shadow: none;
 
-    z-index: 1;
+  z-index: 1;
 }
 
 
@@ -1312,8 +1387,8 @@ h1 span {
 .car-home-hero::after,
 .car-home-hero-bg::before,
 .car-home-hero-bg::after {
-    content: none !important;
-    display: none !important;
+  content: none !important;
+  display: none !important;
 }
 
 
@@ -1322,61 +1397,61 @@ h1 span {
 ===================================================== */
 
 .car-home-hero-content {
-    position: relative;
+  position: relative;
 
-    z-index: 3;
+  z-index: 3;
 
-    width: 48%;
-    padding: 50px 0 60px 5%;
+  width: 48%;
+  padding: 50px 0 60px 5%;
 }
 
 .car-home-eyebrow {
-    display: block;
+  display: block;
 
-    color: #777a7d;
+  color: #777a7d;
 
-    font-size: 15px;
-    font-weight: 750;
-    letter-spacing: 4px;
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 4px;
 
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .car-home-hero-content h1 {
-    margin: 0;
+  margin: 0;
 
-    font-size: clamp(48px, 6vw, 88px);
-    line-height: 1.04;
+  font-size: clamp(48px, 6vw, 88px);
+  line-height: 1.04;
 
-    font-weight: 850;
-    letter-spacing: -3.5px;
+  font-weight: 850;
+  letter-spacing: -3.5px;
 
-    color: #191c22;
+  color: #191c22;
 }
 
 .car-home-hero-content h1 span {
-    display: block;
-    color: var(--car-accent);
+  display: block;
+  color: var(--car-accent);
 }
 
 .car-home-line {
-    width: 110px;
-    height: 5px;
+  width: 110px;
+  height: 5px;
 
-    margin: 28px 0 22px;
+  margin: 28px 0 22px;
 
-    background: var(--car-accent);
+  background: var(--car-accent);
 }
 
 .car-home-hero-content p {
-    max-width: 440px;
+  max-width: 440px;
 
-    margin: 0 0 35px;
+  margin: 0 0 35px;
 
-    color: var(--car-text);
+  color: var(--car-text);
 
-    font-size: 20px;
-    line-height: 1.7;
+  font-size: 20px;
+  line-height: 1.7;
 }
 
 
@@ -1385,44 +1460,44 @@ h1 span {
 ===================================================== */
 
 .car-home-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
 
-    padding: 18px 30px;
+  padding: 18px 30px;
 
-    border-radius: 50px;
+  border-radius: 50px;
 
-    color: #fff;
-    background: var(--car-dark);
+  color: #fff;
+  background: var(--car-dark);
 
-    font-size: 17px;
-    font-weight: 700;
+  font-size: 17px;
+  font-weight: 700;
 
-    text-decoration: none;
+  text-decoration: none;
 
-    box-shadow: 0 10px 25px rgba(30, 35, 40, 0.15);
+  box-shadow: 0 10px 25px rgba(30, 35, 40, 0.15);
 
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .car-home-button:hover {
-    color: #fff;
-    background: var(--car-accent);
+  color: #fff;
+  background: var(--car-accent);
 
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 
-    box-shadow: 0 12px 25px rgba(80, 80, 80, 0.2);
+  box-shadow: 0 12px 25px rgba(80, 80, 80, 0.2);
 }
 
 .car-home-button span {
-    font-size: 23px;
-    transition: transform 0.3s ease;
+  font-size: 23px;
+  transition: transform 0.3s ease;
 }
 
 .car-home-button:hover span {
-    transform: translateX(6px);
+  transform: translateX(6px);
 }
 
 
@@ -1431,29 +1506,29 @@ h1 span {
 ===================================================== */
 
 .car-home-hero-bottom {
-    position: absolute;
+  position: absolute;
 
-    z-index: 3;
+  z-index: 3;
 
-    bottom: 22px;
-    left: 5%;
+  bottom: 22px;
+  left: 5%;
 
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 
-    font-size: 10px;
-    font-weight: 750;
-    letter-spacing: 2px;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 2px;
 
-    color: #777a7d;
+  color: #777a7d;
 }
 
 .car-home-bottom-line {
-    width: 45px;
-    height: 1px;
+  width: 45px;
+  height: 1px;
 
-    background: var(--car-accent);
+  background: var(--car-accent);
 }
 
 
@@ -1465,62 +1540,62 @@ h1 span {
 
 @media (max-width: 650px) {
 
-    .car-home-hero {
-        min-height: 650px;
-        align-items: flex-start;
-    }
+  .car-home-hero {
+    min-height: 650px;
+    align-items: flex-start;
+  }
 
-    .car-home-hero-content {
-        width: 100%;
-        padding: 45px 6% 0;
-    }
+  .car-home-hero-content {
+    width: 100%;
+    padding: 45px 6% 0;
+  }
 
-    .car-home-hero-content h1 {
-        font-size: 49px;
-        letter-spacing: -2px;
-    }
+  .car-home-hero-content h1 {
+    font-size: 49px;
+    letter-spacing: -2px;
+  }
 
-    .car-home-hero-content p {
-        font-size: 16px;
-        max-width: 340px;
-    }
+  .car-home-hero-content p {
+    font-size: 16px;
+    max-width: 340px;
+  }
 
-    .car-home-hero-bg img {
-        width: 100%;
-        height: 55%;
+  .car-home-hero-bg img {
+    width: 100%;
+    height: 55%;
 
-        object-fit: contain;
-        object-position: center bottom;
-    }
+    object-fit: contain;
+    object-position: center bottom;
+  }
 
-    .car-home-button {
-        padding: 15px 22px;
-        font-size: 14px;
-    }
+  .car-home-button {
+    padding: 15px 22px;
+    font-size: 14px;
+  }
 
-    .car-home-customize {
-        width: 90%;
+  .car-home-customize {
+    width: 90%;
 
-        min-height: 180px;
+    min-height: 180px;
 
-        flex-direction: column;
-        align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
 
-        padding: 30px 22px;
-        gap: 22px;
-    }
+    padding: 30px 22px;
+    gap: 22px;
+  }
 
-    .car-home-banner-content h2 {
-        font-size: 29px;
-    }
+  .car-home-banner-content h2 {
+    font-size: 29px;
+  }
 
-    .car-home-banner-content p {
-        font-size: 16px;
-    }
+  .car-home-banner-content p {
+    font-size: 16px;
+  }
 
 }
 
-                                      /* //////////////////////////////////////////////
+/* //////////////////////////////////////////////
                                             THIYAGU - TOOL PAGE (CUSTOMIZATION PAGE)
                                                 PREMIUM SILVER CAR CUSTOMIZATION
                                        ///////////////////////////////////////////////  */
@@ -1591,14 +1666,12 @@ h1 span {
   box-sizing: border-box;
   overflow: visible;
 
-  background: linear-gradient(
-    145deg,
-    #f8fafc 0%,
-    #dce2e8 25%,
-    #b9c3cc 55%,
-    #e9edf1 78%,
-    #aeb9c4 100%
-  );
+  background: linear-gradient(145deg,
+      #f8fafc 0%,
+      #dce2e8 25%,
+      #b9c3cc 55%,
+      #e9edf1 78%,
+      #aeb9c4 100%);
 
   border-top: 1px solid #ffffff;
 
@@ -1636,12 +1709,10 @@ h1 span {
 
   color: #39434d;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #c5cdd5 50%,
-    #eef1f4
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #c5cdd5 50%,
+      #eef1f4);
 
   font-size: 12px;
   font-weight: 700;
@@ -1656,11 +1727,9 @@ h1 span {
 }
 
 .custom-reset-button:hover {
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #d4dce3
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #d4dce3);
 
   border-color: #758491;
 
@@ -1711,12 +1780,10 @@ h1 span {
 
   color: #39434d;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff 0%,
-    #dce2e8 45%,
-    #bfc9d2 100%
-  );
+  background: linear-gradient(145deg,
+      #ffffff 0%,
+      #dce2e8 45%,
+      #bfc9d2 100%);
 
   cursor: pointer;
   text-align: left;
@@ -1732,12 +1799,10 @@ h1 span {
 .car-option-trigger.active {
   color: #26313b;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #c5cfd8 50%,
-    #eef1f4
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #c5cfd8 50%,
+      #eef1f4);
 
   border-color: #758491;
 
@@ -1763,14 +1828,12 @@ h1 span {
   border-radius: 10px;
   border: 1px solid #9da9b4;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff 0%,
-    #dce2e8 25%,
-    #9ba8b5 55%,
-    #eef1f4 78%,
-    #aeb9c4 100%
-  );
+  background: linear-gradient(145deg,
+      #ffffff 0%,
+      #dce2e8 25%,
+      #9ba8b5 55%,
+      #eef1f4 78%,
+      #aeb9c4 100%);
 
   box-shadow:
     inset 0 1px 3px rgba(255, 255, 255, 0.95),
@@ -1847,7 +1910,7 @@ h1 span {
 
 .car-option-dropdown {
   position: absolute;
-  z-index: 10000!important;
+  z-index: 10000 !important;
 
   left: 0;
   bottom: calc(100% + 7px);
@@ -1865,12 +1928,10 @@ h1 span {
   border: 1px solid #9da9b4;
   border-radius: 8px;
 
-  background: linear-gradient(
-    145deg,
-    #f8fafc,
-    #dce2e8 50%,
-    #c2ccd5
-  );
+  background: linear-gradient(145deg,
+      #f8fafc,
+      #dce2e8 50%,
+      #c2ccd5);
 
   box-shadow:
     inset 0 1px 2px rgba(255, 255, 255, 0.9),
@@ -1905,12 +1966,10 @@ h1 span {
 .car-dropdown-item.selected {
   color: #202830;
 
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #c5cfd8 50%,
-    #e9edf1
-  );
+  background: linear-gradient(145deg,
+      #ffffff,
+      #c5cfd8 50%,
+      #e9edf1);
 
   box-shadow:
     inset 0 1px 2px rgba(255, 255, 255, 0.95),
@@ -1944,24 +2003,20 @@ h1 span {
 }
 
 .car-option-dropdown::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #ffffff,
-    #9da9b4,
-    #dce2e8
-  );
+  background: linear-gradient(180deg,
+      #ffffff,
+      #9da9b4,
+      #dce2e8);
 
   border: 1px solid #aeb8c2;
   border-radius: 6px;
 }
 
 .car-option-dropdown::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    #ffffff,
-    #788895,
-    #c5cdd5
-  );
+  background: linear-gradient(180deg,
+      #ffffff,
+      #788895,
+      #c5cdd5);
 }
 
 
@@ -2076,5 +2131,3 @@ h1 span {
     transform: rotate(360deg);
   }
 }
-
-
